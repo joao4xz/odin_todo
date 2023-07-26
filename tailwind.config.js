@@ -10,13 +10,9 @@ module.exports = {
         'container': 'auto 1fr',
       },
       gridTemplateColumns: {
-        'container': '20% 1fr',
+        'container': 'minmax(20%, auto), 1fr',
+        'auto-container': 'auto, 1fr',
       },
-      colors: {
-        'primary': '#66717E',
-        'secundary': '#DADDD8',
-        'third': '#160C28',
-      }
     },
   },
   plugins: [],
