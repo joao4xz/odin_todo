@@ -1,8 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/template.html'],
+  content: [
+    './dist/**/*.{html,js}',
+    './src/**/*.{html,js}',
+  ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateRows: {
+        'container': 'auto 1fr',
+      },
+      gridTemplateColumns: {
+        'container': '20% 1fr',
+      },
+      colors: {
+        'primary': '#66717E',
+        'secundary': '#DADDD8',
+        'third': '#160C28',
+      }
+    },
   },
   plugins: [],
 }
