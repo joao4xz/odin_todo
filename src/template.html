@@ -46,16 +46,26 @@
           <p class="text-zinc-700">Upcoming</p>
         </button>
       </div>
-      <div class="flex items-center hover:bg-slate-200 rounded-lg p-2">
+      <div class="flex items-center hover:bg-slate-200 rounded-lg p-2 group">
         <button id="project-button" class="flex-1 " type="button" >
           <p class="text-zinc-700 text-lg text-start">Projects</p>
         </button>
-        <button id="add-project-button">
+        <button id="add-project-button" class="hidden group-hover:inline">
           <svg class="fill-zinc-600 w-7 hover:bg-slate-300 p-1 rounded-lg" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve"><g><path d="M492 236H276V20c0-11.046-8.954-20-20-20s-20 8.954-20 20v216H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h216v216c0 11.046 8.954 20 20 20s20-8.954 20-20V276h216c11.046 0 20-8.954 20-20s-8.954-20-20-20z" data-original="#000000"></path></g></svg>
         </button>
       </div>
-      <div class="projects">
-
+      <div id="projects" class="text-base text-zinc-700 flex flex-col">
+        <div class="flex items-center justify-between hover:bg-slate-200 rounded-lg p-2 gap-2 group">
+          <button type="button" class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="5" fill="red" stroke-width="2" />
+            </svg>        
+            <p>The Odin Project</p>
+          </button>
+          <button class="hidden group-hover:inline" type="button">
+            <svg class="fill-zinc-600 w-6 hover:fill-zinc-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Edit</title><path d="M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z" /></svg>
+          </button>
+        </div>
       </div>
     </nav>
     <main class="bg-slate-200 col-span-2">

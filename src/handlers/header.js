@@ -7,8 +7,8 @@ function handleMenuButton() {
   });
 }
 
-function headerButtons() {
+function handleHeader() {
   handleMenuButton();
 }
 
-export { headerButtons };
+export { handleHeader };

@@ -13,6 +13,9 @@ module.exports = {
         'container': 'minmax(20%, auto), 1fr',
         'auto-container': 'auto, 1fr',
       },
+      fontFamily: {
+        'Roboto': ['Roboto']
+      },
     },
   },
   plugins: [],
