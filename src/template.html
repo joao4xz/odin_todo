@@ -29,19 +29,19 @@
       <div id="tabs" class="flex flex-col text-lg gap-1 mb-2">
         <button id="inbox-button" class="flex items-center gap-2 hover:bg-slate-200 rounded-lg p-2" type="button">
           <svg class="w-9 fill-blue-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <title>inbox</title><path d="M6,4H17C18.66,4 20,5.34 20,7V18C20,19.66 18.66,21 17,21H6C4.34,21 3,19.66 3,18V7C3,5.34 4.34,4 6,4M6,5C4.9,5 4,5.9 4,7V15H9V15.5C9,16.88 10.12,18 11.5,18C12.88,18 14,16.88 14,15.5V15H19V7C19,5.9 18.1,5 17,5H6M4,18C4,19.1 4.9,20 6,20H17C18.1,20 19,19.1 19,18V16H14.96C14.72,17.7 13.26,19 11.5,19C9.74,19 8.28,17.7 8.04,16H4V18Z" />
+            <title>Inbox</title><path d="M6,4H17C18.66,4 20,5.34 20,7V18C20,19.66 18.66,21 17,21H6C4.34,21 3,19.66 3,18V7C3,5.34 4.34,4 6,4M6,5C4.9,5 4,5.9 4,7V15H9V15.5C9,16.88 10.12,18 11.5,18C12.88,18 14,16.88 14,15.5V15H19V7C19,5.9 18.1,5 17,5H6M4,18C4,19.1 4.9,20 6,20H17C18.1,20 19,19.1 19,18V16H14.96C14.72,17.7 13.26,19 11.5,19C9.74,19 8.28,17.7 8.04,16H4V18Z" />
           </svg>
           <p class="text-zinc-700">Inbox</p>
         </button>
         <button id="today-button" class="flex items-center gap-2 hover:bg-slate-200 rounded-lg p-2" type="button">
           <svg class="w-9 fill-green-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <title>calendar</title><path d="M7,2H8C8.55,2 9,2.45 9,3V4H14V3C14,2.45 14.45,2 15,2H16C16.55,2 17,2.45 17,3V4C18.66,4 20,5.34 20,7V18C20,19.66 18.66,21 17,21H6C4.34,21 3,19.66 3,18V7C3,5.34 4.34,4 6,4V3C6,2.45 6.45,2 7,2M15,4H16V3H15V4M8,4V3H7V4H8M6,5C4.9,5 4,5.9 4,7V8H19V7C19,5.9 18.1,5 17,5H6M4,18C4,19.1 4.9,20 6,20H17C18.1,20 19,19.1 19,18V9H4V18M12,13H17V18H12V13M13,14V17H16V14H13Z" />
+            <title>Today</title><path d="M7,2H8C8.55,2 9,2.45 9,3V4H14V3C14,2.45 14.45,2 15,2H16C16.55,2 17,2.45 17,3V4C18.66,4 20,5.34 20,7V18C20,19.66 18.66,21 17,21H6C4.34,21 3,19.66 3,18V7C3,5.34 4.34,4 6,4V3C6,2.45 6.45,2 7,2M15,4H16V3H15V4M8,4V3H7V4H8M6,5C4.9,5 4,5.9 4,7V8H19V7C19,5.9 18.1,5 17,5H6M4,18C4,19.1 4.9,20 6,20H17C18.1,20 19,19.1 19,18V9H4V18M12,13H17V18H12V13M13,14V17H16V14H13Z" />
           </svg>
           <p class="text-zinc-700">Today</p>
         </button>
         <button id="upcoming-button" class="flex items-center gap-2 hover:bg-slate-200 rounded-lg p-2" type="button">
           <svg class="w-9 fill-purple-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <title>fast-forward</title><path d="M21.4,12.5L12,18.38L11,19V13.38L3,18.38L2,19V6L11,11.62V6L21.4,12.5M19.5,12.5L12,7.8V17.2L19.5,12.5M10.5,12.5L3,7.8V17.2L10.5,12.5Z" />
+            <title>Upcoming</title><path d="M21.4,12.5L12,18.38L11,19V13.38L3,18.38L2,19V6L11,11.62V6L21.4,12.5M19.5,12.5L12,7.8V17.2L19.5,12.5M10.5,12.5L3,7.8V17.2L10.5,12.5Z" />
           </svg>
           <p class="text-zinc-700">Upcoming</p>
         </button>
@@ -51,18 +51,18 @@
           <p class="text-zinc-700 text-lg text-start">Projects</p>
         </button>
         <button id="add-project-button" class="hidden group-hover:inline">
-          <svg class="fill-zinc-600 w-7 hover:bg-slate-300 p-1 rounded-lg" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve"><g><path d="M492 236H276V20c0-11.046-8.954-20-20-20s-20 8.954-20 20v216H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h216v216c0 11.046 8.954 20 20 20s20-8.954 20-20V276h216c11.046 0 20-8.954 20-20s-8.954-20-20-20z" data-original="#000000"></path></g></svg>
+          <svg class="fill-zinc-600 w-7 hover:bg-slate-300 p-1 rounded-lg" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve"><title>Add project</title><g><path d="M492 236H276V20c0-11.046-8.954-20-20-20s-20 8.954-20 20v216H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h216v216c0 11.046 8.954 20 20 20s20-8.954 20-20V276h216c11.046 0 20-8.954 20-20s-8.954-20-20-20z" data-original="#000000"></path></g></svg>
         </button>
       </div>
       <div id="projects" class="text-base text-zinc-700 flex flex-col">
-        <div class="flex items-center justify-between hover:bg-slate-200 rounded-lg p-2 gap-2 group">
-          <button type="button" class="flex items-center gap-2">
+        <div class="project flex items-center justify-between hover:bg-slate-200 rounded-lg group">
+          <button type="button" class="flex items-center gap-2 flex-1 p-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="5" fill="red" stroke-width="2" />
             </svg>        
             <p>The Odin Project</p>
           </button>
-          <button class="w-6" type="button">
+          <button class="w-10 p-2" type="button">
             <svg class="fill-zinc-600 hover:fill-zinc-500 hidden group-hover:inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Edit</title><path d="M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z" /></svg>
           </button>
         </div>

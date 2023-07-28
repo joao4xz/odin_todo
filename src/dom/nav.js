@@ -1,4 +1,3 @@
-import { handleAddProjectHUD } from "../handlers/nav";
 import { handleOverlay } from "../handlers/nav";
 
 function createOverlay() {
@@ -61,9 +60,13 @@ function createDropdownColor(colors, colorDropdown) {
   });
 }
 
-export function createAddProjectHUD() {
+export function createAddProjectHUD(header) {
   const form = document.createElement('form');
-  form.classList.add('flex', 'flex-col', 'bg-slate-300', 'text-zinc-700', 'text-xl', 'p-10', 'rounded-xl', 'shadow-xl');
+  form.classList.add('flex', 'flex-col', 'bg-slate-300', 'text-zinc-700', 'text-xl', 'px-8', 'pb-6', 'pt-4', 'rounded-xl', 'shadow-xl');
+
+  const hudHeader = document.createElement('h2');
+  hudHeader.textContent = header
+  hudHeader.classList.add('text-2xl', 'mb-2', 'font-bold', 'self-center');
 
   const nameLabel = document.createElement('label');
   nameLabel.textContent = 'Name';
@@ -159,6 +162,7 @@ export function createAddProjectHUD() {
   colorSelectorBox.appendChild(colorDropdown);
   colorSelectorBox.appendChild(buttonArea);
 
+  form.appendChild(hudHeader);
   form.appendChild(nameLabel);
   form.appendChild(nameInput);
   form.appendChild(colorLabel);
@@ -166,18 +170,16 @@ export function createAddProjectHUD() {
 
   const overlay = createOverlay();
   overlay.appendChild(form);
-
-  handleAddProjectHUD();
 }
 
 export function addProject() {
   const project = document.getElementById('projects');
 
   const projectContainer = document.createElement('div');
-  projectContainer.classList.add('flex', 'items-center', 'justify-between', 'hover:bg-slate-200', 'rounded-lg', 'p-2', 'gap-2', 'group');
+  projectContainer.classList.add('project', 'flex', 'items-center', 'justify-between', 'hover:bg-slate-200', 'rounded-lg', 'group');
 
   const projectButton = document.createElement('button');
-  projectButton.classList.add('flex', 'items-center', 'gap-2');
+  projectButton.classList.add('flex', 'items-center', 'gap-2', 'flex-1', 'p-2');
   projectButton.setAttribute('type', 'button');
 
   const svgCircle = createCircleSVG(document.getElementById('current-color-text').innerText);
@@ -188,7 +190,7 @@ export function addProject() {
   projectButton.appendChild(projectName);
 
   const editButton = document.createElement('button');
-  editButton.classList.add('w-6');
+  editButton.classList.add('w-10', 'p-2');
   editButton.setAttribute('type', 'button');
 
   const editSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -214,4 +216,23 @@ export function addProject() {
   project.appendChild(projectContainer);
 
   removeOverlay();
+}
+
+export function createEditProjectHUD(header, targetProject) {
+  createAddProjectHUD(header);
+  
+  const clickedProject = targetProject.querySelector('p').textContent;
+  const clickedColor = targetProject.querySelector('circle').getAttribute('fill');
+
+  const nameInput = document.getElementById('name');
+  nameInput.value = clickedProject;
+
+  const currentTextColor = document.getElementById('current-color-text');
+  const currentSvgColor = document.getElementById('current-color-svg');
+
+  currentTextColor.textContent = clickedColor.charAt(0).toUpperCase() + clickedColor.slice(1);
+  currentSvgColor.querySelector('circle').setAttribute('fill', clickedColor);
+
+  const saveButton = document.getElementById('add-button');
+  saveButton.textContent = 'Save'; 
 }

@@ -1,4 +1,5 @@
 import { createAddProjectHUD } from "../dom/nav";
+import { createEditProjectHUD } from "../dom/nav";
 import { addProject } from "../dom/nav";
 import { removeOverlay } from "../dom/nav";
 
@@ -26,11 +27,11 @@ function handleUpcomingButton() {
   });
 }
 
-function handleProjectButton() {
+function handleProjectsButton() {
   const projectButton = document.getElementById('project-button');
 
   projectButton.addEventListener('click', () => {
-    console.log('Project Button');
+    console.log('Projects Button');
   });
 }
 
@@ -38,7 +39,8 @@ function handleAddProjectButton() {
   const addProjectButton = document.getElementById('add-project-button');
 
   addProjectButton.addEventListener('click', () => {
-    createAddProjectHUD();
+    createAddProjectHUD('Add project');
+    handleAddProjectHUD();
   });
 }
 
@@ -64,6 +66,7 @@ function handleDropdownOptions() {
       const colorText = targetColor.querySelector('p').textContent;
       currentCircleColor.setAttribute('fill', colorText);
       currentTextColor.textContent = colorText;
+      colors.classList.toggle('hidden');
     }
   });
 }
@@ -84,6 +87,35 @@ function handleAddButton() {
   });
 }
 
+function handleProjects() {
+  const projects = document.getElementById('projects');
+
+  projects.addEventListener('click', (event) => {
+    const targetButton = event.target.closest('button');
+    if (targetButton) {
+      const targetProject = targetButton.closest('.project');
+      if (targetProject) {
+        const firstButton = targetProject.querySelector('button:first-child');
+        const secondButton = targetProject.querySelector('button:last-child');
+
+        if (targetButton === firstButton) {
+          // Handle the first button (e.g., logging the project)
+          console.log(targetProject.querySelector('p').textContent);
+        } else if (targetButton === secondButton) {
+          // Handle the second button (e.g., perform edit action based on SVG)
+          handleEditProject(targetProject);
+        }
+      }
+    }
+  });
+}
+
+function handleEditProject(targetProject) {
+  console.log('Edit action');
+  createEditProjectHUD('Edit project', targetProject);
+  handleEditProjectHUD();
+}
+
 export function handleOverlay() {
   const overlay = document.getElementById('overlay');
 
@@ -95,17 +127,24 @@ export function handleOverlay() {
   });
 }
 
-export function handleAddProjectHUD() {
+function handleAddProjectHUD() {
   handleDropdownColor();
   handleDropdownOptions();
   handleCancelButton();
   handleAddButton();
 }
 
+function handleEditProjectHUD() {
+  handleDropdownColor();
+  handleDropdownOptions();
+  handleCancelButton();
+}
+
 export function handleNav() {
   handleInboxButton();
   handleTodayButton();
   handleUpcomingButton();
-  handleProjectButton();
+  handleProjectsButton();
   handleAddProjectButton();
+  handleProjects();
 }
