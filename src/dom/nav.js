@@ -13,7 +13,13 @@ function createOverlay() {
   return overlay;
 }
 
-function createCircleSVG(color, parentDiv) {
+export function removeOverlay() {
+  const overlay = document.getElementById('overlay');
+
+  overlay.remove();
+}
+
+function createCircleSVG(color) {
   const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svgElement.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
   svgElement.setAttribute('width', '24');
@@ -31,24 +37,25 @@ function createCircleSVG(color, parentDiv) {
   // Append the circle element to the SVG
   svgElement.appendChild(circleElement);
 
-  // Create the text node
-  const textNode = document.createTextNode(`${color}`);
-
-  parentDiv.appendChild(svgElement);
-  parentDiv.appendChild(textNode);
+  return svgElement;
 }
 
 function createDropdownColor(colors, colorDropdown) {
   colors.forEach(color => {
     const button = document.createElement('button');
-    button.classList.add('w-full');
+    button.classList.add('color', 'w-full');
     button.setAttribute('type', 'button');
   
     const buttonContainer = document.createElement('div');
     buttonContainer.classList.add('flex', 'items-center', 'gap-1', 'hover:bg-slate-200');
-  
-    createCircleSVG(color, buttonContainer);
-  
+
+    const svgColor = createCircleSVG(color);
+    const textColor = document.createElement('p');
+    textColor.textContent = color;
+
+    buttonContainer.appendChild(svgColor);
+    buttonContainer.append(textColor);
+    
     button.appendChild(buttonContainer);
     colorDropdown.appendChild(button);
   });
@@ -82,7 +89,14 @@ export function createAddProjectHUD() {
   const colorSelectorInnerBox = document.createElement('div');
   colorSelectorInnerBox.classList.add('flex', 'items-center', 'gap-1');
 
-  createCircleSVG('Red', colorSelectorInnerBox);
+  const currentSvgColor = createCircleSVG('Red');
+  currentSvgColor.id = 'current-color-svg';
+  const currentTextColor = document.createElement('p');
+  currentTextColor.textContent = 'Red';
+  currentTextColor.id = 'current-color-text';
+
+  colorSelectorInnerBox.appendChild(currentSvgColor);
+  colorSelectorInnerBox.appendChild(currentTextColor);
 
   const downArrowSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   downArrowSVG.setAttribute('class', 'w-7');
@@ -99,7 +113,8 @@ export function createAddProjectHUD() {
   downArrowSVG.appendChild(pathElement);
 
   const colorDropdown = document.createElement('div');
-  colorDropdown.classList.add('color', 'absolute', 'hidden', 'w-full', 'border', 'border-solid', 'border-slate-500', 'bg-slate-50', 'max-h-60', 'overflow-y-scroll');
+  colorDropdown.id = 'colors'
+  colorDropdown.classList.add('absolute', 'hidden', 'w-full', 'border', 'border-solid', 'border-slate-500', 'bg-slate-50', 'max-h-60', 'overflow-y-scroll');
 
   createDropdownColor([
     'Red',
@@ -153,4 +168,50 @@ export function createAddProjectHUD() {
   overlay.appendChild(form);
 
   handleAddProjectHUD();
+}
+
+export function addProject() {
+  const project = document.getElementById('projects');
+
+  const projectContainer = document.createElement('div');
+  projectContainer.classList.add('flex', 'items-center', 'justify-between', 'hover:bg-slate-200', 'rounded-lg', 'p-2', 'gap-2', 'group');
+
+  const projectButton = document.createElement('button');
+  projectButton.classList.add('flex', 'items-center', 'gap-2');
+  projectButton.setAttribute('type', 'button');
+
+  const svgCircle = createCircleSVG(document.getElementById('current-color-text').innerText);
+  const projectName = document.createElement('p');
+  projectName.textContent = document.getElementById('name').value;
+
+  projectButton.appendChild(svgCircle);
+  projectButton.appendChild(projectName);
+
+  const editButton = document.createElement('button');
+  editButton.classList.add('w-6');
+  editButton.setAttribute('type', 'button');
+
+  const editSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+  editSvg.setAttribute('class', 'fill-zinc-600 hover:fill-zinc-500 hidden group-hover:inline');
+  editSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  editSvg.setAttribute('viewBox', '0 0 24 24');
+
+  const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+  title.textContent = 'Edit';
+
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', 'M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z');
+
+  editSvg.appendChild(title);
+  editSvg.appendChild(path);
+
+  editButton.appendChild(editSvg);
+
+  projectContainer.appendChild(projectButton);
+  projectContainer.appendChild(editButton);
+
+  project.appendChild(projectContainer);
+
+  removeOverlay();
 }

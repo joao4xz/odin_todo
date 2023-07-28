@@ -1,4 +1,6 @@
 import { createAddProjectHUD } from "../dom/nav";
+import { addProject } from "../dom/nav";
+import { removeOverlay } from "../dom/nav";
 
 function handleInboxButton() {
   const inboxButton = document.getElementById('inbox-button');
@@ -42,21 +44,35 @@ function handleAddProjectButton() {
 
 function handleDropdownColor() {
   const colorSelector = document.getElementById('color-selector');
-  const colors = document.querySelectorAll('.color');
+  const colors = document.getElementById('colors');
 
   colorSelector.addEventListener('click', () => {
-    colors.forEach(color => {
-      color.classList.toggle('hidden');
-    });
+    colors.classList.toggle('hidden');
+  });
+}
+
+function handleDropdownOptions() {
+  const colors = document.getElementById('colors');
+
+  const currentSvgColor = document.getElementById('current-color-svg');
+  const currentTextColor = document.getElementById('current-color-text');
+
+  colors.addEventListener('click', (event) => {
+    const targetColor = event.target.closest('.color');
+    if (targetColor) {
+      const currentCircleColor = currentSvgColor.querySelector('circle');
+      const colorText = targetColor.querySelector('p').textContent;
+      currentCircleColor.setAttribute('fill', colorText);
+      currentTextColor.textContent = colorText;
+    }
   });
 }
 
 function handleCancelButton() {
   const cancelButton = document.getElementById('cancel-button');
-  const overlay = document.getElementById('overlay');
 
   cancelButton.addEventListener('click', () => {
-    overlay.remove();
+    removeOverlay();
   });
 }
 
@@ -64,7 +80,7 @@ function handleAddButton() {
   const addButton = document.getElementById('add-button');
 
   addButton.addEventListener('click', () => {
-    console.log('Add');
+    addProject();
   });
 }
 
@@ -81,6 +97,7 @@ export function handleOverlay() {
 
 export function handleAddProjectHUD() {
   handleDropdownColor();
+  handleDropdownOptions();
   handleCancelButton();
   handleAddButton();
 }
