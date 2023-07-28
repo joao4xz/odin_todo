@@ -236,3 +236,13 @@ export function createEditProjectHUD(header, targetProject) {
   const saveButton = document.getElementById('add-button');
   saveButton.textContent = 'Save'; 
 }
+
+export function saveProject(targetProject) {
+  const newProjectName = document.getElementById('name').value;
+  const newColor = document.getElementById('current-color-text').textContent;
+
+  targetProject.querySelector('p').textContent = newProjectName;
+  targetProject.querySelector('circle').setAttribute('fill', newColor);
+
+  removeOverlay();
+}

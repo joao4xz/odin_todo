@@ -1,6 +1,7 @@
 import { createAddProjectHUD } from "../dom/nav";
 import { createEditProjectHUD } from "../dom/nav";
 import { addProject } from "../dom/nav";
+import { saveProject } from "../dom/nav";
 import { removeOverlay } from "../dom/nav";
 
 function handleInboxButton() {
@@ -99,10 +100,8 @@ function handleProjects() {
         const secondButton = targetProject.querySelector('button:last-child');
 
         if (targetButton === firstButton) {
-          // Handle the first button (e.g., logging the project)
           console.log(targetProject.querySelector('p').textContent);
         } else if (targetButton === secondButton) {
-          // Handle the second button (e.g., perform edit action based on SVG)
           handleEditProject(targetProject);
         }
       }
@@ -113,7 +112,15 @@ function handleProjects() {
 function handleEditProject(targetProject) {
   console.log('Edit action');
   createEditProjectHUD('Edit project', targetProject);
-  handleEditProjectHUD();
+  handleEditProjectHUD(targetProject);
+}
+
+function handleSaveButton(targetProject) {
+  const saveButton = document.getElementById('add-button');
+
+  saveButton.addEventListener('click', () => {
+    saveProject(targetProject);
+  });
 }
 
 export function handleOverlay() {
@@ -134,10 +141,11 @@ function handleAddProjectHUD() {
   handleAddButton();
 }
 
-function handleEditProjectHUD() {
+function handleEditProjectHUD(targetProject) {
   handleDropdownColor();
   handleDropdownOptions();
   handleCancelButton();
+  handleSaveButton(targetProject);
 }
 
 export function handleNav() {
