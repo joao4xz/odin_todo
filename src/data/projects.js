@@ -53,6 +53,24 @@ export function getProject(title) {
   }
 }
 
+export function validateProject(title) {
+  const titleRegex = /^[A-Za-z0-9 _-]{3,21}$/;
+  
+  if(titleRegex.test(title) && isTitleUnique(title)) {
+    return true
+  }
+  return false
+}
+
+function isTitleUnique(title) {
+  for (const project of projects) {
+    if(title.toLowerCase() === project.title.toLowerCase()) {
+      return false;
+    }
+  }
+  return true;
+}
+
 export function printProjects() {
   console.clear();
   projects.forEach(project => {

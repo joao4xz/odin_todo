@@ -4,6 +4,7 @@ import { addProject } from "../dom/nav";
 import { saveProject } from "../dom/nav";
 import { removeOverlay } from "../dom/nav";
 import { createMainPage } from "../dom/main";
+import { validateProject } from "../data/projects";
 
 function handleInboxButton() {
   const inboxButton = document.getElementById('inbox-button');
@@ -94,8 +95,10 @@ function handleAddButton() {
   const addButton = document.getElementById('add-button');
 
   addButton.addEventListener('click', () => {
-    addProject(document.getElementById('name').value, document.getElementById('current-color-text').innerText);
-    createMainPage(document.getElementById('projects').lastChild.querySelector('p').textContent, document.getElementById('projects').lastChild.querySelector('circle').getAttribute('fill').toLowerCase());
+    if(validateProject(document.getElementById('name').value)) {
+      addProject(document.getElementById('name').value, document.getElementById('current-color-text').innerText);
+      createMainPage(document.getElementById('projects').lastChild.querySelector('p').textContent, document.getElementById('projects').lastChild.querySelector('circle').getAttribute('fill').toLowerCase());
+    }
   });
 }
 
@@ -131,8 +134,10 @@ function handleSaveButton(targetProject) {
   const saveButton = document.getElementById('add-button');
 
   saveButton.addEventListener('click', () => {
-    saveProject(targetProject);
-    createMainPage(targetProject.querySelector('p').textContent, targetProject.querySelector('circle').getAttribute('fill').toLowerCase());
+    if(validateProject(document.getElementById('name').value)) {
+      saveProject(targetProject);
+      createMainPage(targetProject.querySelector('p').textContent, targetProject.querySelector('circle'). getAttribute('fill').toLowerCase());
+    }
   });
 }
 
