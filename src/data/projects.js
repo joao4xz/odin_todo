@@ -53,6 +53,15 @@ export function getProject(title) {
   }
 }
 
+export function deleteProject(title) {
+  for (let i = 0; i < projects.length; i++) {
+    if(title === projects[i].title) {
+      projects.splice(i, 1);
+      break;
+    }
+  }
+}
+
 export function validateProject(title) {
   const titleRegex = /^[A-Za-z0-9 _-]{3,21}$/;
   

@@ -1,3 +1,5 @@
+import { getProject } from "../data/projects";
+import { deleteProject } from "../data/projects";
 import { handleMainPageButtons } from "../handlers/main";
 
 export function createMainPage(headerTextContent, headerLineColor) {
@@ -138,4 +140,12 @@ export function createMainPage(headerTextContent, headerLineColor) {
 export function cleanMainPage() {
   const mainContainer = document.getElementById('main-container');
   mainContainer.textContent = '';
+}
+
+export function deleteCurrentProject() {
+  const tabName = document.getElementById('tab-name');
+
+  getProject(tabName.textContent).remove();
+  deleteProject(tabName.textContent);
+  createMainPage('Inbox', 'blue');
 }
