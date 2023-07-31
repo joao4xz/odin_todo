@@ -94,7 +94,7 @@ function handleAddButton() {
   const addButton = document.getElementById('add-button');
 
   addButton.addEventListener('click', () => {
-    addProject();
+    addProject(document.getElementById('name').value, document.getElementById('current-color-text').innerText);
     createMainPage(document.getElementById('projects').lastChild.querySelector('p').textContent, document.getElementById('projects').lastChild.querySelector('circle').getAttribute('fill').toLowerCase());
   });
 }
@@ -154,7 +154,7 @@ function handleAddProjectHUD() {
   handleAddButton();
 }
 
-function handleEditProjectHUD(targetProject) {
+export function handleEditProjectHUD(targetProject) {
   handleDropdownColor();
   handleDropdownOptions();
   handleCancelButton();

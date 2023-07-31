@@ -1,3 +1,5 @@
+import { handleMainPageButtons } from "../handlers/main";
+
 export function createMainPage(headerTextContent, headerLineColor) {
   cleanMainPage();
 
@@ -7,16 +9,16 @@ export function createMainPage(headerTextContent, headerLineColor) {
   mainHeader.classList.add('flex', 'justify-between', 'gap-10', 'border-b', `border-[${headerLineColor}]`, 'pb-3');
 
   const headerText = document.createElement('div');
-  headerText.classList.add('text-5xl');
+  headerText.classList.add('text-4xl');
   headerText.id = 'tab-name';
   headerText.textContent = headerTextContent;
 
   const headerButtons = document.createElement('div');
-  headerButtons.classList.add('flex', 'gap-3', 'text-lg', 'text-gray-600', 'items-end');
+  headerButtons.classList.add('flex', 'gap-2', 'text-lg', 'text-gray-600', 'items-end');
   headerButtons.id = 'tab-options';
 
   const sortButton = document.createElement('button');
-  sortButton.classList.add('flex', 'gap-1', 'items-center', 'hover:bg-slate-300', 'rounded-md', 'px-3');
+  sortButton.classList.add('flex', 'gap-1', 'items-center', 'hover:bg-slate-300', 'rounded-md', 'px-1');
   sortButton.id = 'sort';
 
   const sortSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -39,32 +41,62 @@ export function createMainPage(headerTextContent, headerLineColor) {
   sortButton.appendChild(sortSVG);
   sortButton.appendChild(sortText);
 
-  const editButton = document.createElement('button');
-  editButton.classList.add('flex', 'gap-1', 'items-center', 'hover:bg-slate-300', 'rounded-md', 'px-3');
-  editButton.id = 'edit';
-
-  const editSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  editSVG.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-  editSVG.classList.add('w-6');
-  editSVG.setAttribute('viewBox', '0 0 24 24');
-
-  const editSVGtitle = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-  editSVGtitle.textContent = 'Edit';
-
-  const editSVGpath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  editSVGpath.setAttribute('d', 'M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z');
-
-  editSVG.appendChild(editSVGtitle);
-  editSVG.appendChild(editSVGpath);
-
-  const editText = document.createElement('p');
-  editText.textContent = 'Edit';
-
-  editButton.appendChild(editSVG);
-  editButton.appendChild(editText);
-
   headerButtons.appendChild(sortButton);
-  headerButtons.appendChild(editButton);
+
+  if(headerTextContent !== 'Inbox' &&
+     headerTextContent !== 'Today' &&
+     headerTextContent !== 'Upcoming'){
+       const editButton = document.createElement('button');
+       editButton.classList.add('flex', 'gap-1', 'items-center', 'hover:bg-slate-300', 'rounded-md', 'px-1');
+       editButton.id = 'edit';
+     
+       const editSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+       editSVG.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+       editSVG.classList.add('w-6');
+       editSVG.setAttribute('viewBox', '0 0 24 24');
+     
+       const editSVGtitle = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+       editSVGtitle.textContent = 'Edit';
+     
+       const editSVGpath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+       editSVGpath.setAttribute('d', 'M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z');
+     
+       editSVG.appendChild(editSVGtitle);
+       editSVG.appendChild(editSVGpath);
+     
+       const editText = document.createElement('p');
+       editText.textContent = 'Edit';
+     
+       editButton.appendChild(editSVG);
+       editButton.appendChild(editText);
+
+       const deleteButton = document.createElement('button');
+       deleteButton.classList.add('flex', 'items-center', 'hover:bg-slate-300', 'rounded-md', 'px-1');
+       deleteButton.id = 'delete';
+     
+       const deleteSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+       deleteSVG.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+       deleteSVG.classList.add('w-6');
+       deleteSVG.setAttribute('viewBox', '0 0 24 24');
+     
+       const deleteSVGtitle = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+       deleteSVGtitle.textContent = 'Delete';
+     
+       const deleteSVGpath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+       deleteSVGpath.setAttribute('d', 'M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z');
+     
+       deleteSVG.appendChild(deleteSVGtitle);
+       deleteSVG.appendChild(deleteSVGpath);
+
+       const deleteText = document.createElement('p');
+       deleteText.textContent = 'Delete';
+     
+       deleteButton.appendChild(deleteSVG);
+       deleteButton.appendChild(deleteText);
+
+       headerButtons.appendChild(editButton);
+       headerButtons.append(deleteButton);
+  }
 
   mainHeader.appendChild(headerText);
   mainHeader.appendChild(headerButtons);
@@ -99,6 +131,8 @@ export function createMainPage(headerTextContent, headerLineColor) {
   mainContainer.appendChild(mainHeader);
   mainContainer.appendChild(tasks);
   mainContainer.appendChild(addTaskButton);
+
+  handleMainPageButtons(headerTextContent);
 }
 
 export function cleanMainPage() {

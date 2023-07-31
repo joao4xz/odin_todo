@@ -1,3 +1,4 @@
+import { editProject, pushProject } from "../data/projects";
 import { handleOverlay } from "../handlers/nav";
 
 function createOverlay() {
@@ -15,7 +16,9 @@ function createOverlay() {
 export function removeOverlay() {
   const overlay = document.getElementById('overlay');
 
-  overlay.remove();
+  if(overlay) {
+    overlay.remove();
+  }
 }
 
 function createCircleSVG(color) {
@@ -172,7 +175,7 @@ export function createAddProjectHUD(header) {
   overlay.appendChild(form);
 }
 
-export function addProject() {
+export function addProject(title, color) {
   const project = document.getElementById('projects');
 
   const projectContainer = document.createElement('div');
@@ -182,9 +185,9 @@ export function addProject() {
   projectButton.classList.add('flex', 'items-center', 'gap-2', 'flex-1', 'p-2');
   projectButton.setAttribute('type', 'button');
 
-  const svgCircle = createCircleSVG(document.getElementById('current-color-text').innerText);
+  const svgCircle = createCircleSVG(color);
   const projectName = document.createElement('p');
-  projectName.textContent = document.getElementById('name').value;
+  projectName.textContent = title;
 
   projectButton.appendChild(svgCircle);
   projectButton.appendChild(projectName);
@@ -199,14 +202,14 @@ export function addProject() {
   editSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
   editSvg.setAttribute('viewBox', '0 0 24 24');
 
-  const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-  title.textContent = 'Edit';
+  const svgTitle = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+  svgTitle.textContent = 'Edit';
 
-  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path.setAttribute('d', 'M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z');
+  const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  svgPath.setAttribute('d', 'M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z');
 
-  editSvg.appendChild(title);
-  editSvg.appendChild(path);
+  editSvg.appendChild(svgTitle);
+  editSvg.appendChild(svgPath);
 
   editButton.appendChild(editSvg);
 
@@ -215,6 +218,8 @@ export function addProject() {
 
   project.appendChild(projectContainer);
 
+  pushProject(title, color, projectContainer);
+  
   removeOverlay();
 }
 
@@ -241,6 +246,7 @@ export function saveProject(targetProject) {
   const newProjectName = document.getElementById('name').value;
   const newColor = document.getElementById('current-color-text').textContent;
 
+  editProject(targetProject.querySelector('p').textContent, newProjectName, newColor);
   targetProject.querySelector('p').textContent = newProjectName;
   targetProject.querySelector('circle').setAttribute('fill', newColor);
 
