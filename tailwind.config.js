@@ -10,8 +10,7 @@ module.exports = {
         'container': 'auto 1fr',
       },
       gridTemplateColumns: {
-        'container': 'minmax(20%, auto), 1fr',
-        'auto-container': 'auto, 1fr',
+        'container': 'auto, 1fr',
       },
       fontFamily: {
         'Roboto': ['Roboto']
