@@ -1,7 +1,7 @@
 import { editProject, pushProject } from "../data/projects";
 import { handleOverlay } from "../handlers/nav";
 
-function createOverlay() {
+export function createOverlay() {
   const overlay = document.createElement('div');
 
   overlay.id = 'overlay';

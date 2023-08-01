@@ -1,6 +1,6 @@
-import { getProject } from "../data/projects";
-import { deleteProject } from "../data/projects";
 import { handleMainPageButtons } from "../handlers/main";
+import { createOverlay } from "./nav";
+import { handleWarningButtons } from "../handlers/main";
 
 export function createMainPage(headerTextContent, headerLineColor) {
   cleanMainPage();
@@ -142,10 +142,56 @@ export function cleanMainPage() {
   mainContainer.textContent = '';
 }
 
+export function createDeleteWarning(title) {
+  const overlay = createOverlay();
+
+  const container = document.createElement('form');
+  container.classList.add('flex', 'flex-col', 'bg-slate-300', 'text-zinc-700', 'text-xl', 'px-10', 'pb-8', 'pt-6', 'gap-3','rounded-xl', 'shadow-xl');
+
+  const header = document.createElement('h2');
+  header.textContent = 'Delete?';
+  header.classList.add('font-bold', 'text-2xl')
+
+  const p = document.createElement('p');
+  p.textContent = `Are you sure you want to delete `;
+
+  const span = document.createElement('span');
+  span.classList.add('font-semibold');
+  span.textContent = title;
+
+  const questionMark = document.createTextNode('?');
+
+  p.appendChild(span);
+  p.appendChild(questionMark);
+
+  const buttons = document.createElement('div');
+  buttons.classList.add('flex', 'gap-3', 'justify-end', 'mt-3');
+  
+  const cancelButton = document.createElement('button');
+  cancelButton.textContent = 'Cancel';
+  cancelButton.classList.add('bg-zinc-700', 'text-slate-200', 'px-3', 'rounded-md');
+  cancelButton.setAttribute('type', 'button');
+  cancelButton.id = 'cancel-button';
+
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+  deleteButton.classList.add('bg-red-700', 'text-slate-200', 'px-3', 'rounded-md');
+  deleteButton.setAttribute('type', 'button');
+  deleteButton.id = 'delete-button'
+
+  buttons.appendChild(cancelButton);
+  buttons.appendChild(deleteButton);
+
+  container.appendChild(header);
+  container.appendChild(p);
+  container.appendChild(buttons);
+
+  overlay.appendChild(container);
+
+  handleWarningButtons();
+}
+
 export function deleteCurrentProject() {
   const tabName = document.getElementById('tab-name');
-
-  getProject(tabName.textContent).remove();
-  deleteProject(tabName.textContent);
-  createMainPage('Inbox', 'blue');
+  createDeleteWarning(tabName.textContent);
 }

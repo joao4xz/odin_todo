@@ -3,6 +3,8 @@ import { createMainPage } from "../dom/main";
 import { deleteCurrentProject } from "../dom/main";
 import { createEditProjectHUD } from "../dom/nav";
 import { handleEditProjectHUD } from "../handlers/nav";
+import { removeOverlay } from "../dom/nav";
+import { deleteProject } from "../data/projects";
 
 function handleMainSortButton() {
   const sortButton = document.getElementById('sort');
@@ -29,6 +31,32 @@ function handleMainDeleteButton() {
     console.log('Delete');
     deleteCurrentProject();
   });
+}
+
+function handleCancelWarningButton() {
+  const cancelButton = document.getElementById('cancel-button');
+
+  cancelButton.addEventListener('click', () => {
+    removeOverlay();
+  });
+}
+
+function handleDeleteWarningButton() {
+  const deleteButton = document.getElementById('delete-button');
+
+  deleteButton.addEventListener('click', () => {
+    const tabName = document.getElementById('tab-name');
+    getProject(tabName.textContent).remove();
+    deleteProject(tabName.textContent);
+    createMainPage('Inbox', 'blue');
+    removeOverlay();
+  })
+
+}
+
+export function handleWarningButtons() {
+  handleCancelWarningButton();
+  handleDeleteWarningButton();
 }
 
 export function handleMainPageButtons(headerTextContent) {
