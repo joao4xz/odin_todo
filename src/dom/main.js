@@ -2,8 +2,7 @@ import { handleMainPageButtons } from "../handlers/main";
 import { createOverlay, removeOverlay } from "./nav";
 import { handleWarningButtons } from "../handlers/main";
 import { getProjectTaskArray } from "../data/projects";
-import { pushTask } from "../data/tasks";
-import { printProjects } from "../data/projects";
+import { parse, format } from 'date-fns';
 
 export function createMainPage(headerTextContent, headerLineColor) {
   cleanMainPage();
@@ -363,7 +362,8 @@ export function createTask(title, description, date, priority) {
 
     const taskDate = document.createElement('p');
     taskDate.classList.add('text-xs');
-    taskDate.textContent = date;
+    const dateObject = parse(date, 'yyyy-MM-dd', new Date());
+    taskDate.textContent = format(dateObject, 'MMM d');;
 
     taskDateDiv.appendChild(taskDateIcon);
     taskDateDiv.appendChild(taskDate);
