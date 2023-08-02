@@ -145,13 +145,13 @@ export function createAddProjectHUD(header) {
 
   const cancelButton = document.createElement('button');
   cancelButton.id = 'cancel-button';
-  cancelButton.classList.add('bg-slate-50', 'mt-5', 'flex-1', 'rounded');
+  cancelButton.classList.add('bg-slate-50', 'mt-5', 'flex-1', 'rounded', 'hover:bg-slate-100');
   cancelButton.setAttribute('type', 'button');
   cancelButton.textContent = 'Cancel';
 
   const addButton = document.createElement('button');
   addButton.id = 'add-button';
-  addButton.classList.add('bg-slate-50', 'mt-5', 'flex-1', 'rounded');
+  addButton.classList.add('bg-slate-50', 'mt-5', 'flex-1', 'rounded', 'hover:bg-slate-100');
   addButton.setAttribute('type', 'button');
   addButton.textContent = 'Add';
 

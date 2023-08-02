@@ -1,5 +1,5 @@
 import { getProject } from "../data/projects";
-import { createMainPage } from "../dom/main";
+import { createAddTaskHUD, createMainPage, createTask } from "../dom/main";
 import { deleteCurrentProject } from "../dom/main";
 import { createEditProjectHUD } from "../dom/nav";
 import { handleEditProjectHUD } from "../handlers/nav";
@@ -51,7 +51,109 @@ function handleDeleteWarningButton() {
     createMainPage('Inbox', 'blue');
     removeOverlay();
   })
+}
 
+function handleAddTaskButton() {
+  const addTaskButton = document.getElementById('add-task');
+
+  addTaskButton.addEventListener('click', () => {
+    createAddTaskHUD('Add task');
+    handleTaskHUDButtons();
+  });
+}
+
+function handlePriorityButtons() {
+  const priorityButtons = document.getElementById('priority-buttons');
+
+  priorityButtons.addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if(button){
+      const buttons = priorityButtons.querySelectorAll('button');
+
+      buttons.forEach((btn) => {
+        btn.classList.remove('bg-red-500', 'bg-yellow-500', 'bg-blue-500', 'bg-gray-500', 'selected');
+      });
+
+      if(button.classList.contains('border-red-600')){
+        button.classList.toggle('bg-red-500');
+        button.classList.toggle('selected');
+      }
+      else if(button.classList.contains('border-yellow-600')){
+        button.classList.toggle('bg-yellow-500');
+        button.classList.toggle('selected');
+      }
+      else if(button.classList.contains('border-blue-600')){
+        button.classList.toggle('bg-blue-500');
+        button.classList.toggle('selected');
+      }
+      else if(button.classList.contains('border-gray-600')){
+        button.classList.toggle('bg-gray-500');
+        button.classList.toggle('selected');
+      }
+    }
+  });
+}
+
+function handleCancelButton() {
+  const cancelButton = document.getElementById('cancel-button');
+
+  cancelButton.addEventListener('click', () => {
+    removeOverlay();
+  });
+}
+
+function handleAddButton() {
+  const addButton = document.getElementById('add-button');
+
+  addButton.addEventListener('click', () => {
+    const title = document.getElementById('task-name').value;
+    const description = document.getElementById('task-description').value;
+    const date = document.getElementById('task-date').value;
+    const priority = document.querySelector('.selected');
+    const priorityColor = priority.id.slice(0, priority.id.indexOf('-priority'));
+    createTask(title, description, date, priorityColor);
+    removeOverlay();
+  });
+}
+
+function handleTaskHUDButtons() {
+  handlePriorityButtons();
+  handleCancelButton();
+  handleAddButton();
+}
+
+function handleTaskCheckButton() {
+  const tasks = document.getElementById('tasks');
+
+  tasks.addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if(button && button.classList.contains('border-red-600')){
+      button.classList.toggle('bg-red-500');
+    }
+    else if(button && button.classList.contains('border-yellow-600')){
+      button.classList.toggle('bg-yellow-500');
+    }
+    else if(button && button.classList.contains('border-blue-600')){
+      button.classList.toggle('bg-blue-500');
+    }
+    else if(button && button.classList.contains('border-gray-600')){
+      button.classList.toggle('bg-gray-500');
+    }
+  });
+}
+
+function handleTaskEditButton() {
+
+}
+
+function handleTaskDeleteButton() {
+  
+}
+
+function handleTaskButtons() {
+  handleTaskCheckButton();
+  handleTaskEditButton();
+  handleTaskDeleteButton();
 }
 
 export function handleWarningButtons() {
@@ -65,6 +167,8 @@ export function handleMainPageButtons(headerTextContent) {
     handleMainEditButton();
     handleMainDeleteButton();
   }
+  handleAddTaskButton();
+  handleTaskButtons();
 }
 
 export function handleMain() {
