@@ -53,6 +53,14 @@ export function getProject(title) {
   }
 }
 
+export function getProjectTaskArray(title) {
+  for(let i = 0; i < projects.length; i++){
+    if(projects[i].title.toLowerCase() === title.toLowerCase()){
+      return projects[i].tasks;
+    }
+  }
+}
+
 export function deleteProject(title) {
   for (let i = 0; i < projects.length; i++) {
     if(title === projects[i].title) {
@@ -86,6 +94,6 @@ export function printProjects() {
     console.log(`Title: ${project.title}`);
     console.log(`Color: ${project.color}`);
     console.log(project.node);
-    console.log(`Tasks: ${project.tasks}`);
+    console.log(project.tasks);
   });
 }

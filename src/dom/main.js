@@ -1,6 +1,9 @@
 import { handleMainPageButtons } from "../handlers/main";
-import { createOverlay } from "./nav";
+import { createOverlay, removeOverlay } from "./nav";
 import { handleWarningButtons } from "../handlers/main";
+import { getProjectTaskArray } from "../data/projects";
+import { pushTask } from "../data/tasks";
+import { printProjects } from "../data/projects";
 
 export function createMainPage(headerTextContent, headerLineColor) {
   cleanMainPage();
@@ -136,6 +139,7 @@ export function createMainPage(headerTextContent, headerLineColor) {
   mainContainer.appendChild(addTaskButton);
 
   handleMainPageButtons(headerTextContent);
+  renderTasks();
 }
 
 export function cleanMainPage() {
@@ -281,7 +285,7 @@ export function createAddTaskHUD(header) {
   const grayPriority = document.createElement('button');
   grayPriority.setAttribute('type', 'button');
   grayPriority.setAttribute('id', 'gray-priority');
-  grayPriority.classList.add('w-5', 'h-5', 'rounded-full', 'border-2', 'border-gray-600', 'ease-linear', 'duration-200', 'bg-white');
+  grayPriority.classList.add('w-5', 'h-5', 'rounded-full', 'border-2', 'border-gray-600', 'ease-linear', 'duration-200', 'bg-gray-500', 'selected');
 
   priorityButtons.appendChild(redPriority);
   priorityButtons.appendChild(yellowPriority);
@@ -351,17 +355,19 @@ export function createTask(title, description, date, priority) {
   const taskDateDiv = document.createElement('div');
   taskDateDiv.classList.add('flex', 'items-center');
 
-  const taskDateIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  taskDateIcon.setAttribute('class', 'w-4 h-4');
-  taskDateIcon.setAttribute('viewBox', '0 0 24 24');
-  taskDateIcon.innerHTML = '<title>calendar</title><path d="M7,2H8C8.55,2 9,2.45 9,3V4H14V3C14,2.45 14.45,2 15,2H16C16.55,2 17,2.45 17,3V4C18.66,4 20,5.34 20,7V18C20,19.66 18.66,21 17,21H6C4.34,21 3,19.66 3,18V7C3,5.34 4.34,4 6,4V3C6,2.45 6.45,2 7,2M15,4H16V3H15V4M8,4V3H7V4H8M6,5C4.9,5 4,5.9 4,7V8H19V7C19,5.9 18.1,5 17,5H6M4,18C4,19.1 4.9,20 6,20H17C18.1,20 19,19.1 19,18V9H4V18M12,13H17V18H12V13M13,14V17H16V14H13Z" />';
+  if(date) {
+    const taskDateIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    taskDateIcon.setAttribute('class', 'w-4 h-4');
+    taskDateIcon.setAttribute('viewBox', '0 0 24 24');
+    taskDateIcon.innerHTML = '<title>calendar</title><path d="M7,2H8C8.55,2 9,2.45 9,3V4H14V3C14,2.45 14.45,2 15,2H16C16.55,2 17,2.45 17,3V4C18.66,4 20,5.34 20,7V18C20,19.66 18.66,21 17,21H6C4.34,21 3,19.66 3,18V7C3,5.34 4.34,4 6,4V3C6,2.45 6.45,2 7,2M15,4H16V3H15V4M8,4V3H7V4H8M6,5C4.9,5 4,5.9 4,7V8H19V7C19,5.9 18.1,5 17,5H6M4,18C4,19.1 4.9,20 6,20H17C18.1,20 19,19.1 19,18V9H4V18M12,13H17V18H12V13M13,14V17H16V14H13Z" />';
 
-  const taskDate = document.createElement('p');
-  taskDate.classList.add('text-xs');
-  taskDate.textContent = date;
+    const taskDate = document.createElement('p');
+    taskDate.classList.add('text-xs');
+    taskDate.textContent = date;
 
-  taskDateDiv.appendChild(taskDateIcon);
-  taskDateDiv.appendChild(taskDate);
+    taskDateDiv.appendChild(taskDateIcon);
+    taskDateDiv.appendChild(taskDate);
+  }
 
   taskTextDiv.appendChild(taskTitle);
   taskTextDiv.appendChild(taskDescription);
@@ -393,4 +399,12 @@ export function createTask(title, description, date, priority) {
   taskDiv.appendChild(rightDiv);
 
   tasks.appendChild(taskDiv);
+}
+
+function renderTasks() {
+  const tasks = getProjectTaskArray(document.getElementById('tab-name').textContent);
+
+  for (let i = 0; i < tasks.length; i++) {
+    createTask(tasks[i].title, tasks[i].description, tasks[i].date, tasks[i].priorityColor);
+  }
 }

@@ -1,10 +1,11 @@
-import { getProject } from "../data/projects";
+import { getProject, printProjects, pushProject } from "../data/projects";
 import { createAddTaskHUD, createMainPage, createTask } from "../dom/main";
 import { deleteCurrentProject } from "../dom/main";
 import { createEditProjectHUD } from "../dom/nav";
 import { handleEditProjectHUD } from "../handlers/nav";
 import { removeOverlay } from "../dom/nav";
 import { deleteProject } from "../data/projects";
+import { pushTask, validateTask } from "../data/tasks";
 
 function handleMainSortButton() {
   const sortButton = document.getElementById('sort');
@@ -111,8 +112,12 @@ function handleAddButton() {
     const date = document.getElementById('task-date').value;
     const priority = document.querySelector('.selected');
     const priorityColor = priority.id.slice(0, priority.id.indexOf('-priority'));
-    createTask(title, description, date, priorityColor);
-    removeOverlay();
+    if(validateTask(title)) {
+      createTask(title, description, date, priorityColor);
+      pushTask(title, description, date, priorityColor);
+      removeOverlay();
+      printProjects();
+    }
   });
 }
 
