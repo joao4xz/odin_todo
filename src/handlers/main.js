@@ -1,10 +1,8 @@
-import { getProject, printProjects, pushProject } from "../data/projects";
-import { createAddTaskHUD, createMainPage, createTask } from "../dom/main";
+import { getProject, printProjects, deleteProject } from "../data/projects";
+import { createAddTaskHUD, createMainPage, createTask, createEditTaskHUD, saveTask } from "../dom/main";
 import { deleteCurrentProject } from "../dom/main";
-import { createEditProjectHUD } from "../dom/nav";
+import { createEditProjectHUD, removeOverlay } from "../dom/nav";
 import { handleEditProjectHUD } from "../handlers/nav";
-import { removeOverlay } from "../dom/nav";
-import { deleteProject } from "../data/projects";
 import { pushTask, validateTask } from "../data/tasks";
 
 function handleMainSortButton() {
@@ -59,7 +57,7 @@ function handleAddTaskButton() {
 
   addTaskButton.addEventListener('click', () => {
     createAddTaskHUD('Add task');
-    handleTaskHUDButtons();
+    handleAddTaskHUDButtons();
   });
 }
 
@@ -73,22 +71,27 @@ function handlePriorityButtons() {
 
       buttons.forEach((btn) => {
         btn.classList.remove('bg-red-500', 'bg-yellow-500', 'bg-blue-500', 'bg-gray-500', 'selected');
+        btn.classList.add('bg-white');
       });
 
       if(button.classList.contains('border-red-600')){
         button.classList.toggle('bg-red-500');
+        button.classList.toggle('bg-white');
         button.classList.toggle('selected');
       }
       else if(button.classList.contains('border-yellow-600')){
         button.classList.toggle('bg-yellow-500');
+        button.classList.toggle('bg-white');
         button.classList.toggle('selected');
       }
       else if(button.classList.contains('border-blue-600')){
         button.classList.toggle('bg-blue-500');
+        button.classList.toggle('bg-white');
         button.classList.toggle('selected');
       }
       else if(button.classList.contains('border-gray-600')){
         button.classList.toggle('bg-gray-500');
+        button.classList.toggle('bg-white');
         button.classList.toggle('selected');
       }
     }
@@ -121,7 +124,7 @@ function handleAddButton() {
   });
 }
 
-function handleTaskHUDButtons() {
+function handleAddTaskHUDButtons() {
   handlePriorityButtons();
   handleCancelButton();
   handleAddButton();
@@ -148,7 +151,42 @@ function handleTaskCheckButton() {
 }
 
 function handleTaskEditButton() {
+  const tasks = document.getElementById('tasks');
 
+  tasks.addEventListener('click', (event) => {
+    const targetButton = event.target.closest('button');
+    if (targetButton) {
+      const targetTask = targetButton.closest('.task');
+      const targetButtonsDiv = targetButton.closest('.task-buttons');
+      if (targetButtonsDiv) {
+        const firstButton = targetButtonsDiv.querySelector('button:first-child');
+        const secondButton = targetButtonsDiv.querySelector('button:last-child');
+
+        if (targetButton === firstButton) {
+          createEditTaskHUD('Edit task', targetTask);
+          handleEditTaskHUDButtons(targetTask);
+        } else if (targetButton === secondButton) {
+          console.log(`Delete ${targetTask.querySelector('.text-xl').textContent}`);
+        }
+      }
+    }
+  });
+}
+
+function handleEditTaskHUDButtons(targetTask) {
+  handlePriorityButtons();
+  handleCancelButton();
+  handleSaveButton(targetTask);
+}
+
+function handleSaveButton(targetTask) {
+  const saveButton = document.getElementById('add-button');
+
+  saveButton.addEventListener('click', () => {
+    if(validateTask(document.getElementById('task-name').value)) {
+      saveTask(targetTask);
+    }
+  });
 }
 
 function handleTaskDeleteButton() {

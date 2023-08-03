@@ -12,5 +12,15 @@ export function pushTask(title, description, date, priorityColor) {
 
 export function validateTask(title) {
   const regex = /^[a-zA-Z0-9\s,.?!-_]{1,}$/;
-  return regex.test(title);
+  return regex.test(title) && isTaskUnique(title);
+}
+
+function isTaskUnique(title) {
+  const project = getProjectTaskArray(document.getElementById('tab-name').textContent);
+  for (const task of project) {
+    if(title.toLowerCase() === task.title.toLowerCase()) {
+      return false;
+    }
+  }
+  return true;
 }

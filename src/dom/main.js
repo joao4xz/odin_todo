@@ -3,6 +3,7 @@ import { createOverlay, removeOverlay } from "./nav";
 import { handleWarningButtons } from "../handlers/main";
 import { getProjectTaskArray } from "../data/projects";
 import { parse, format } from 'date-fns';
+import { printProjects } from "../data/projects";
 
 export function createMainPage(headerTextContent, headerLineColor) {
   cleanMainPage();
@@ -336,7 +337,7 @@ export function createTask(title, description, date, priority) {
 
   const finishTaskButton = document.createElement('button');
   finishTaskButton.setAttribute('type', 'button');
-  finishTaskButton.classList.add('w-5', 'h-5', 'rounded-full', 'border-2', `border-${priority}-600`, 'ease-linear', 'duration-200');
+  finishTaskButton.classList.add('priority', 'w-5', 'h-5', 'rounded-full', 'border-2', `border-${priority}-600`, 'ease-linear', 'duration-200');
 
   finishTaskButtonDiv.appendChild(finishTaskButton);
 
@@ -344,11 +345,11 @@ export function createTask(title, description, date, priority) {
   taskTextDiv.classList.add('ml-2');
 
   const taskTitle = document.createElement('p');
-  taskTitle.classList.add('text-xl');
+  taskTitle.classList.add('text-xl', 'title');
   taskTitle.textContent = title;
 
   const taskDescription = document.createElement('p');
-  taskDescription.classList.add('text-xs', 'mb-1');
+  taskDescription.classList.add('text-xs', 'mb-1', 'description');
   taskDescription.textContent = description;
 
   const taskDateDiv = document.createElement('div');
@@ -361,7 +362,7 @@ export function createTask(title, description, date, priority) {
     taskDateIcon.innerHTML = '<title>calendar</title><path d="M7,2H8C8.55,2 9,2.45 9,3V4H14V3C14,2.45 14.45,2 15,2H16C16.55,2 17,2.45 17,3V4C18.66,4 20,5.34 20,7V18C20,19.66 18.66,21 17,21H6C4.34,21 3,19.66 3,18V7C3,5.34 4.34,4 6,4V3C6,2.45 6.45,2 7,2M15,4H16V3H15V4M8,4V3H7V4H8M6,5C4.9,5 4,5.9 4,7V8H19V7C19,5.9 18.1,5 17,5H6M4,18C4,19.1 4.9,20 6,20H17C18.1,20 19,19.1 19,18V9H4V18M12,13H17V18H12V13M13,14V17H16V14H13Z" />';
 
     const taskDate = document.createElement('p');
-    taskDate.classList.add('text-xs');
+    taskDate.classList.add('text-xs', 'date');
     const dateObject = parse(date, 'yyyy-MM-dd', new Date());
     taskDate.textContent = format(dateObject, 'MMM d');;
 
@@ -401,10 +402,83 @@ export function createTask(title, description, date, priority) {
   tasks.appendChild(taskDiv);
 }
 
-function renderTasks() {
+export function renderTasks() {
   const tasks = getProjectTaskArray(document.getElementById('tab-name').textContent);
 
   for (let i = 0; i < tasks.length; i++) {
     createTask(tasks[i].title, tasks[i].description, tasks[i].date, tasks[i].priorityColor);
   }
+}
+
+export function createEditTaskHUD(header, targetTask) {
+  console.log(`Title: ${targetTask.querySelector('.title').textContent}`);
+  console.log(`Description: ${targetTask.querySelector('.description').textContent}`);
+  console.log(`Date: ${targetTask.querySelector('.date').textContent}`);
+  createAddTaskHUD(header);
+
+  document.getElementById('task-name').value = targetTask.querySelector('.title').textContent;
+  document.getElementById('task-description').value = targetTask.querySelector('.description').textContent;
+
+  const dateInput = document.getElementById('task-date');
+
+  const dateObject = parse(targetTask.querySelector('.date').textContent, 'MMM d', new Date());
+
+  dateInput.value = format(dateObject, 'yyyy-MM-dd');
+
+  const priority = targetTask.querySelector('.priority');
+  const priorityButtons = document.getElementById('priority-buttons').querySelectorAll('button');
+  for (const button of priorityButtons) {
+    button.classList.remove('bg-red-500', 'bg-yellow-500', 'bg-blue-500', 'bg-gray-500', 'selected');
+    button.classList.add('bg-white');
+    if(priority.classList.contains('border-red-600') && button.classList.contains('border-red-600')){
+      button.classList.toggle('bg-red-500');
+      button.classList.toggle('bg-white');
+      button.classList.toggle('selected');
+    }
+    else if(priority.classList.contains('border-yellow-600') && button.classList.contains('border-yellow-600')){
+      button.classList.toggle('bg-yellow-500');
+      button.classList.toggle('bg-white');
+      button.classList.toggle('selected');
+    }
+    else if(priority.classList.contains('border-blue-600') && button.classList.contains('border-blue-600')){
+      button.classList.toggle('bg-blue-500');
+      button.classList.toggle('bg-white');
+      button.classList.toggle('selected');
+    }
+    else if(priority.classList.contains('border-gray-600') && button.classList.contains('border-gray-600')){
+      button.classList.toggle('bg-gray-500');
+      button.classList.toggle('bg-white');
+      button.classList.toggle('selected');
+    }
+  }
+
+  const saveButton = document.getElementById('add-button');
+  saveButton.textContent = 'Save'; 
+}
+
+
+export function saveTask(targetTask) {
+  const project = getProjectTaskArray(document.getElementById('tab-name').textContent);
+
+  for (const task of project) {
+    if(targetTask.querySelector('.title').textContent === task.title) {
+      task.title = document.getElementById('task-name').value;
+      task.description = document.getElementById('task-description').value;      
+      task.date = document.getElementById('task-date').value;
+      const priority = document.querySelector('.selected');
+      task.priority = priority.id.slice(0, priority.id.indexOf('-priority'));
+
+      targetTask.querySelector('.title').textContent = task.title;
+      targetTask.querySelector('.description').textContent = task.description;
+
+      const dateObject = parse(task.date, 'yyyy-MM-dd', new Date());
+      targetTask.querySelector('.date').textContent = format(dateObject, 'MMM d');;
+
+      targetTask.querySelector('.priority').classList.remove('border-red-500', 'border-yellow-500', 'border-blue-500', 'border-gray-500');
+      targetTask.querySelector('.priority').classList.add(`border-${task.priority}-500`);
+      printProjects();
+      break;
+    }
+  };
+  removeOverlay();
 }
