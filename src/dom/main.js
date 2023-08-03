@@ -192,13 +192,12 @@ export function createDeleteWarning(title) {
   container.appendChild(buttons);
 
   overlay.appendChild(container);
-
-  handleWarningButtons();
 }
 
 export function deleteCurrentProject() {
   const tabName = document.getElementById('tab-name');
   createDeleteWarning(tabName.textContent);
+  handleWarningButtons();
 }
 
 export function createAddTaskHUD(header) {
@@ -456,7 +455,6 @@ export function createEditTaskHUD(header, targetTask) {
   saveButton.textContent = 'Save'; 
 }
 
-
 export function saveTask(targetTask) {
   const project = getProjectTaskArray(document.getElementById('tab-name').textContent);
 
@@ -481,4 +479,8 @@ export function saveTask(targetTask) {
     }
   };
   removeOverlay();
+}
+
+export function createDeleteTaskHUD(targetTask) {
+  createDeleteWarning(targetTask.querySelector('.title').textContent);
 }

@@ -1,9 +1,9 @@
 import { getProject, printProjects, deleteProject } from "../data/projects";
-import { createAddTaskHUD, createMainPage, createTask, createEditTaskHUD, saveTask } from "../dom/main";
+import { createAddTaskHUD, createMainPage, createTask, createEditTaskHUD, saveTask, createDeleteTaskHUD } from "../dom/main";
 import { deleteCurrentProject } from "../dom/main";
 import { createEditProjectHUD, removeOverlay } from "../dom/nav";
 import { handleEditProjectHUD } from "../handlers/nav";
-import { pushTask, validateTask } from "../data/tasks";
+import { deleteTask, pushTask, validateTask } from "../data/tasks";
 
 function handleMainSortButton() {
   const sortButton = document.getElementById('sort');
@@ -150,7 +150,7 @@ function handleTaskCheckButton() {
   });
 }
 
-function handleTaskEditButton() {
+function handleEditDeleteButtons() {
   const tasks = document.getElementById('tasks');
 
   tasks.addEventListener('click', (event) => {
@@ -166,6 +166,8 @@ function handleTaskEditButton() {
           createEditTaskHUD('Edit task', targetTask);
           handleEditTaskHUDButtons(targetTask);
         } else if (targetButton === secondButton) {
+          createDeleteTaskHUD(targetTask);
+          handleTaskDeleteButtons(targetTask);
           console.log(`Delete ${targetTask.querySelector('.text-xl').textContent}`);
         }
       }
@@ -189,14 +191,25 @@ function handleSaveButton(targetTask) {
   });
 }
 
-function handleTaskDeleteButton() {
-  
+function handleDeleteButton(targetTask) {
+  const deleteButton = document.getElementById('delete-button');
+
+  deleteButton.addEventListener('click', () => {
+    deleteTask(targetTask);
+    targetTask.remove();
+    printProjects();
+    removeOverlay();
+  });
+}
+
+function handleTaskDeleteButtons(targetTask) {
+  handleCancelButton();
+  handleDeleteButton(targetTask);
 }
 
 function handleTaskButtons() {
   handleTaskCheckButton();
-  handleTaskEditButton();
-  handleTaskDeleteButton();
+  handleEditDeleteButtons();
 }
 
 export function handleWarningButtons() {

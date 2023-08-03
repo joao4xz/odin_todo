@@ -24,3 +24,14 @@ function isTaskUnique(title) {
   }
   return true;
 }
+
+export function deleteTask(targetTask) {
+  const tasks = getProjectTaskArray(document.getElementById('tab-name').textContent);
+
+  for (let i = 0; i < tasks.length; i++) {
+    if(targetTask.querySelector('.title').textContent === tasks[i].title) {
+      tasks.splice(i, 1);
+      break;
+    }
+  };
+}
