@@ -147,6 +147,22 @@ function handleTaskCheckButton() {
     else if(button && button.classList.contains('border-gray-600')){
       button.classList.toggle('bg-gray-500');
     }
+    
+    const task = event.target.closest('.task');
+    const taskTitle = task.querySelector('.title');
+    const taskDescription  = task.querySelector('.description');
+    const taskDate = task.querySelector('.date');
+    const taskDateSVG = task.querySelector('svg');
+
+    if(button && button.classList.contains('priority')) {
+      taskTitle.classList.toggle('line-through');
+      taskDescription.classList.toggle('line-through');
+      taskDate.classList.toggle('line-through');
+      taskTitle.classList.toggle('text-zinc-400');
+      taskDescription.classList.toggle('text-zinc-400');
+      taskDate.classList.toggle('text-zinc-400');
+      taskDateSVG.classList.toggle('fill-zinc-400');
+    }
   });
 }
 
