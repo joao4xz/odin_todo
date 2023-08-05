@@ -3,7 +3,7 @@ import { createAddTaskHUD, createMainPage, createTask, createEditTaskHUD, saveTa
 import { deleteCurrentProject } from "../dom/main";
 import { createEditProjectHUD, removeOverlay } from "../dom/nav";
 import { handleEditProjectHUD } from "../handlers/nav";
-import { deleteTask, pushTask, validateTask } from "../data/tasks";
+import { deleteTask, pushTask, validateAddTask, validateEditTask } from "../data/tasks";
 
 function handleMainSortButton() {
   const sortButton = document.getElementById('sort');
@@ -62,6 +62,18 @@ function handleAddTaskButton() {
   });
 }
 
+function handleTaskInput() {
+  const nameInput = document.getElementById('task-name');
+  const descriptionInput = document.getElementById('task-description');
+
+  nameInput.addEventListener('click', () => {
+    nameInput.classList.remove('border-2', 'border-red-500');
+  });
+  descriptionInput.addEventListener('click', () => {
+    descriptionInput.classList.remove('border-2', 'border-red-500');
+  })
+}
+
 function handlePriorityButtons() {
   const priorityButtons = document.getElementById('priority-buttons');
 
@@ -116,16 +128,24 @@ function handleAddButton() {
     const date = document.getElementById('task-date').value;
     const priority = document.querySelector('.selected');
     const priorityColor = priority.id.slice(0, priority.id.indexOf('-priority'));
-    if(validateTask(title)) {
+    const validation = validateAddTask(title, description);
+    if(validation === true) {
       createTask(title, description, date, priorityColor);
       pushTask(title, description, date, priorityColor);
       removeOverlay();
       printProjects();
     }
+    else if(validation === 'title') {
+      document.getElementById('task-name').classList.add('border-2', 'border-red-500');
+    }
+    else if(validation === 'description') {
+      document.getElementById('task-description').classList.add('border-2', 'border-red-500');
+    }
   });
 }
 
 function handleAddTaskHUDButtons() {
+  handleTaskInput();
   handlePriorityButtons();
   handleCancelButton();
   handleAddButton();
@@ -211,7 +231,7 @@ function handleSaveButton(targetTask) {
   const saveButton = document.getElementById('add-button');
 
   saveButton.addEventListener('click', () => {
-    if(validateTask(document.getElementById('task-name').value)) {
+    if(validateEditTask(document.getElementById('task-name').value, document.getElementById('task-description'), targetTask.querySelector('.title').textContent)) {
       saveTask(targetTask);
     }
   });

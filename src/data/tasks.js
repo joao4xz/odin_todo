@@ -11,19 +11,47 @@ export function pushTask(title, description, date, priorityColor) {
   getProjectTaskArray(document.getElementById('tab-name').textContent).push(obj);
 }
 
-export function validateTask(title) {
-  const regex = /^[a-zA-Z0-9\s,.?!-_]{1,}$/;
-  return regex.test(title) && isTaskUnique(title);
+export function validateAddTask(title, description) {
+  const titleRegex = /^[a-zA-Z0-9\s,.?!_-]{1,}$/;
+  const descriptionRegex = /^[a-zA-Z0-9\s,.?!_-]*$/;
+
+  const isTitleValid = titleRegex.test(title);
+  const isDescriptionValid = descriptionRegex.test(description);
+  console.log(description);
+  console.log(isDescriptionValid);
+  const isTitleUnique = isTaskUnique(title);
+
+  if(isTitleValid && isDescriptionValid && isTitleUnique) {
+    console.log('true');
+    return true;
+  }
+  else {
+    if (!isTitleValid) {
+      return 'title';
+    } else if (!isDescriptionValid) {
+      return 'description';
+    } else {
+      return 'title';
+    }
+  }
 }
 
-function isTaskUnique(title) {
+function isTaskUnique(title, oldTitle) {
   const project = getProjectTaskArray(document.getElementById('tab-name').textContent);
   for (const task of project) {
     if(title.toLowerCase() === task.title.toLowerCase()) {
+      if(oldTitle && oldTitle.toLowerCase() === task.title.toLowerCase()) {
+        continue;
+      }
       return false;
     }
   }
   return true;
+}
+
+export function validateEditTask(title, description, oldTitle) {
+  const regex = /^[a-zA-Z0-9\s,.?!-_]{1,}$/;
+  return regex.test(title) && regex.test(description) && isTaskUnique(title, oldTitle);
 }
 
 export function deleteTask(targetTask) {
