@@ -520,8 +520,11 @@ export function saveTask(targetTask) {
       const dateObject = parse(task.date, 'yyyy-MM-dd', new Date());
       targetTask.querySelector('.date').textContent = format(dateObject, 'MMM d');;
 
-      targetTask.querySelector('.priority').classList.remove('border-red-500', 'border-yellow-500', 'border-blue-500', 'border-gray-500');
-      targetTask.querySelector('.priority').classList.add(`border-${task.priority}-500`);
+      targetTask.querySelector('.priority').classList.remove('border-red-600', 'border-yellow-600', 'border-blue-600', 'border-gray-600', 'bg-red-500', 'bg-yellow-500', 'bg-blue-500', 'bg-gray-500');
+      targetTask.querySelector('.priority').classList.add(`border-${task.priority}-600`);
+      if(task.isDone) {
+        targetTask.querySelector('.priority').classList.add(`bg-${task.priority}-500`);
+      }
       printProjects();
       break;
     }
