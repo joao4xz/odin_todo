@@ -1,4 +1,4 @@
-import { getProject, printProjects, deleteProject } from "../data/projects";
+import { getProject, printProjects, deleteProject, getProjectTaskArray } from "../data/projects";
 import { createAddTaskHUD, createMainPage, createTask, createEditTaskHUD, saveTask, createDeleteTaskHUD } from "../dom/main";
 import { deleteCurrentProject } from "../dom/main";
 import { createEditProjectHUD, removeOverlay } from "../dom/nav";
@@ -163,6 +163,15 @@ function handleTaskCheckButton() {
       taskDescription.classList.toggle('text-zinc-400');
       taskDate.classList.toggle('text-zinc-400');
       taskDateSVG.classList.toggle('fill-zinc-400');
+
+      const taskArray = getProjectTaskArray(document.getElementById('tab-name').textContent);
+      for (const task of taskArray) {
+        if(task.title === taskTitle.textContent) {
+          task.isDone = !task.isDone;
+          printProjects();
+          break;
+        }
+      }
     }
   });
 }

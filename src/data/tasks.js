@@ -6,6 +6,7 @@ export function pushTask(title, description, date, priorityColor) {
   obj.description = description;
   obj.date = date;
   obj.priorityColor = priorityColor;
+  obj.isDone = false;
 
   getProjectTaskArray(document.getElementById('tab-name').textContent).push(obj);
 }

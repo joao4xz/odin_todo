@@ -356,7 +356,7 @@ export function createAddTaskHUD(header) {
   overlay.appendChild(container);
 }
 
-export function createTask(title, description, date, priority) {
+export function createTask(title, description, date, priority, isDone) {
   const tasks = document.getElementById('tasks');
 
   const taskDiv = document.createElement('div');
@@ -401,6 +401,20 @@ export function createTask(title, description, date, priority) {
 
     taskDateDiv.appendChild(taskDateIcon);
     taskDateDiv.appendChild(taskDate);
+
+    if(isDone === true) {
+      taskDate.classList.toggle('line-through');
+      taskDate.classList.toggle('text-zinc-400');
+      taskDateIcon.classList.toggle('fill-zinc-400');
+    }
+  }
+
+  if(isDone === true) {
+    taskTitle.classList.toggle('line-through');
+    taskDescription.classList.toggle('line-through');
+    taskTitle.classList.toggle('text-zinc-400');
+    taskDescription.classList.toggle('text-zinc-400');
+    finishTaskButton.classList.toggle(`bg-${priority}-500`);
   }
 
   taskTextDiv.appendChild(taskTitle);
@@ -439,7 +453,7 @@ export function renderTasks() {
   const tasks = getProjectTaskArray(document.getElementById('tab-name').textContent);
 
   for (let i = 0; i < tasks.length; i++) {
-    createTask(tasks[i].title, tasks[i].description, tasks[i].date, tasks[i].priorityColor);
+    createTask(tasks[i].title, tasks[i].description, tasks[i].date, tasks[i].priorityColor, tasks[i].isDone);
   }
 }
 
