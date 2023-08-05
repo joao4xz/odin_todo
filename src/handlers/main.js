@@ -9,7 +9,8 @@ function handleMainSortButton() {
   const sortButton = document.getElementById('sort');
 
   sortButton.addEventListener('click', () => {
-    console.log('Sort');
+    document.querySelector('.sort-dropdown').classList.toggle('hidden');
+    document.querySelector('.sort-dropdown').classList.toggle('block');
   });
 }
 

@@ -22,6 +22,9 @@ export function createMainPage(headerTextContent, headerLineColor) {
   headerButtons.classList.add('flex', 'gap-2', 'text-lg', 'text-gray-600', 'items-end');
   headerButtons.id = 'tab-options';
 
+  const sortContainer = document.createElement('div');
+  sortContainer.classList.add('relative');
+
   const sortButton = document.createElement('button');
   sortButton.classList.add('flex', 'gap-1', 'items-center', 'hover:bg-slate-300', 'rounded-md', 'px-1');
   sortButton.id = 'sort';
@@ -46,7 +49,38 @@ export function createMainPage(headerTextContent, headerLineColor) {
   sortButton.appendChild(sortSVG);
   sortButton.appendChild(sortText);
 
-  headerButtons.appendChild(sortButton);
+  const sortDropdown = document.createElement('div');
+  sortDropdown.setAttribute('class', 'absolute top-full bg-slate-50 flex flex-col items-center rounded-md shadow-xl hidden sort-dropdown');
+
+  const defaultOption = document.createElement('button');
+  defaultOption.setAttribute('type', 'button');
+  defaultOption.setAttribute('class', 'bg-zinc-300 px-3 w-full rounded-t-md');
+  defaultOption.textContent = 'Default';
+
+  const priorityOption = document.createElement('button');
+  priorityOption.setAttribute('type', 'button');
+  priorityOption.setAttribute('class', 'hover:bg-slate-100 px-3 w-full');
+  priorityOption.textContent = 'Priority';
+
+  const dateOption = document.createElement('button');
+  dateOption.setAttribute('type', 'button');
+  dateOption.setAttribute('class', 'hover:bg-slate-100 px-3 w-full');
+  dateOption.textContent = 'Date';
+
+  const statusOption = document.createElement('button');
+  statusOption.setAttribute('type', 'button');
+  statusOption.setAttribute('class', 'hover:bg-slate-100 px-3 w-full rounded-b-md');
+  statusOption.textContent = 'Status';
+
+  sortDropdown.appendChild(defaultOption);
+  sortDropdown.appendChild(priorityOption);
+  sortDropdown.appendChild(dateOption);
+  sortDropdown.appendChild(statusOption);
+
+  sortContainer.appendChild(sortButton)
+  sortContainer.appendChild(sortDropdown);
+
+  headerButtons.appendChild(sortContainer);
 
   if(headerTextContent !== 'Inbox' &&
      headerTextContent !== 'Today' &&
