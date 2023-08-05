@@ -4,7 +4,7 @@ import { addProject } from "../dom/nav";
 import { saveProject } from "../dom/nav";
 import { removeOverlay } from "../dom/nav";
 import { createMainPage } from "../dom/main";
-import { validateProject } from "../data/projects";
+import { validateAddProject, validateEditProject } from "../data/projects";
 
 function handleInboxButton() {
   const inboxButton = document.getElementById('inbox-button');
@@ -95,9 +95,12 @@ function handleAddButton() {
   const addButton = document.getElementById('add-button');
 
   addButton.addEventListener('click', () => {
-    if(validateProject(document.getElementById('name').value)) {
+    if(validateAddProject(document.getElementById('name').value)) {
       addProject(document.getElementById('name').value, document.getElementById('current-color-text').innerText);
       createMainPage(document.getElementById('projects').lastChild.querySelector('p').textContent, document.getElementById('projects').lastChild.querySelector('circle').getAttribute('fill').toLowerCase());
+    }
+    else {
+      document.getElementById('name').classList.add('border-2', 'border-red-500');
     }
   });
 }
@@ -134,10 +137,21 @@ function handleSaveButton(targetProject) {
   const saveButton = document.getElementById('add-button');
 
   saveButton.addEventListener('click', () => {
-    if(validateProject(document.getElementById('name').value)) {
+    if(validateEditProject(document.getElementById('name').value, targetProject.querySelector('p').textContent)) {
       saveProject(targetProject);
       createMainPage(targetProject.querySelector('p').textContent, targetProject.querySelector('circle'). getAttribute('fill').toLowerCase());
     }
+    else {
+      document.getElementById('name').classList.add('border-2', 'border-red-500');
+    }
+  });
+}
+
+function handleInput() {
+  const nameInput = document.getElementById('name');
+
+  nameInput.addEventListener('click', () => {
+    nameInput.classList.remove('border-2', 'border-red-500');
   });
 }
 
@@ -153,6 +167,7 @@ export function handleOverlay() {
 }
 
 function handleAddProjectHUD() {
+  handleInput();
   handleDropdownColor();
   handleDropdownOptions();
   handleCancelButton();
@@ -160,6 +175,7 @@ function handleAddProjectHUD() {
 }
 
 export function handleEditProjectHUD(targetProject) {
+  handleInput();
   handleDropdownColor();
   handleDropdownOptions();
   handleCancelButton();

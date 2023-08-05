@@ -17,8 +17,6 @@ export function validateAddTask(title, description) {
 
   const isTitleValid = titleRegex.test(title);
   const isDescriptionValid = descriptionRegex.test(description);
-  console.log(description);
-  console.log(isDescriptionValid);
   const isTitleUnique = isTaskUnique(title);
 
   if(isTitleValid && isDescriptionValid && isTitleUnique) {
@@ -50,8 +48,25 @@ function isTaskUnique(title, oldTitle) {
 }
 
 export function validateEditTask(title, description, oldTitle) {
-  const regex = /^[a-zA-Z0-9\s,.?!-_]{1,}$/;
-  return regex.test(title) && regex.test(description) && isTaskUnique(title, oldTitle);
+  const titleRegex = /^[a-zA-Z0-9\s,.?!_-]{1,}$/;
+  const descriptionRegex = /^[a-zA-Z0-9\s,.?!_-]*$/;
+
+  const isTitleValid = titleRegex.test(title);
+  const isDescriptionValid = descriptionRegex.test(description);
+  const isTitleUnique = isTaskUnique(title, oldTitle);
+
+  if(isTitleValid && isDescriptionValid && isTitleUnique) {
+    return true;
+  }
+  else {
+    if (!isTitleValid) {
+      return 'title';
+    } else if (!isDescriptionValid) {
+      return 'description';
+    } else {
+      return 'title';
+    }
+  }
 }
 
 export function deleteTask(targetTask) {

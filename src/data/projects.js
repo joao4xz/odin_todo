@@ -70,7 +70,7 @@ export function deleteProject(title) {
   }
 }
 
-export function validateProject(title) {
+export function validateAddProject(title) {
   const titleRegex = /^[A-Za-z0-9 _-]{3,21}$/;
   
   if(titleRegex.test(title) && isTitleUnique(title)) {
@@ -79,9 +79,21 @@ export function validateProject(title) {
   return false
 }
 
-function isTitleUnique(title) {
+export function validateEditProject(title, oldTitle) {
+  const titleRegex = /^[A-Za-z0-9 _-]{3,21}$/;
+  
+  if(titleRegex.test(title) && isTitleUnique(title, oldTitle)) {
+    return true
+  }
+  return false
+}
+
+function isTitleUnique(title, oldTitle) {
   for (const project of projects) {
     if(title.toLowerCase() === project.title.toLowerCase()) {
+      if(oldTitle && oldTitle.toLowerCase() === project.title.toLowerCase()) {
+        continue;
+      }
       return false;
     }
   }

@@ -222,6 +222,7 @@ function handleEditDeleteButtons() {
 }
 
 function handleEditTaskHUDButtons(targetTask) {
+  handleTaskInput();
   handlePriorityButtons();
   handleCancelButton();
   handleSaveButton(targetTask);
@@ -231,8 +232,15 @@ function handleSaveButton(targetTask) {
   const saveButton = document.getElementById('add-button');
 
   saveButton.addEventListener('click', () => {
-    if(validateEditTask(document.getElementById('task-name').value, document.getElementById('task-description'), targetTask.querySelector('.title').textContent)) {
+    const validation = validateEditTask(document.getElementById('task-name').value, document.getElementById('task-description').value, targetTask.querySelector('.title').textContent);
+    if(validation === true) {
       saveTask(targetTask);
+    }
+    else if(validation === 'title') {
+      document.getElementById('task-name').classList.add('border-2', 'border-red-500');
+    }
+    else if(validation === 'description') {
+      document.getElementById('task-description').classList.add('border-2', 'border-red-500');
     }
   });
 }
