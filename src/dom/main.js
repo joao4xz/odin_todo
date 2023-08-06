@@ -1,8 +1,8 @@
 import { handleMainPageButtons } from "../handlers/main";
 import { createOverlay, removeOverlay } from "./nav";
 import { handleWarningButtons } from "../handlers/main";
-import { getProjectTaskArray } from "../data/projects";
-import { parse, format } from 'date-fns';
+import { getProjectTaskArray, getTodayTaskArray } from "../data/projects";
+import { parse, format, isToday } from 'date-fns';
 import { printProjects } from "../data/projects";
 
 export function createMainPage(headerTextContent, headerLineColor) {
@@ -458,8 +458,16 @@ export function createTask(title, description, date, priority, isDone) {
   tasks.appendChild(taskDiv);
 }
 
-export function renderTasks() {
+function renderTasks() {
   const tasks = getProjectTaskArray(document.getElementById('tab-name').textContent);
+
+  if(document.getElementById('tab-name').textContent === 'Today') {
+    const todayArray = getTodayTaskArray();
+
+    for (let i = 0; i < todayArray.length; i++) {
+      createTask(todayArray[i].title, todayArray[i].description, todayArray[i].date, todayArray[i].priorityColor, todayArray[i].isDone);
+    }
+  }
 
   for (let i = 0; i < tasks.length; i++) {
     createTask(tasks[i].title, tasks[i].description, tasks[i].date, tasks[i].priorityColor, tasks[i].isDone);

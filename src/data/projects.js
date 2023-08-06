@@ -1,3 +1,5 @@
+import { isToday, parseISO } from "date-fns";
+
 export const projects = [
   {
     "title": "inbox",
@@ -59,6 +61,18 @@ export function getProjectTaskArray(title) {
       return projects[i].tasks;
     }
   }
+}
+
+export function getTodayTaskArray() {
+  const todayArray = [];
+  for(let i = 0; i < projects.length; i++){
+    for(let j = 0; j < projects[i].tasks.length; j++){
+      if(isToday(parseISO(projects[i].tasks[j].date))){
+        todayArray.push(projects[i].tasks[j]);
+      }
+    }
+  }
+  return todayArray;
 }
 
 export function deleteProject(title) {
