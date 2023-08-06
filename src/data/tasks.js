@@ -1,4 +1,5 @@
 import { getProjectTaskArray } from "./projects";
+import { isToday, parseISO } from "date-fns";
 
 export function pushTask(title, description, date, priorityColor) {
   const obj = {};
@@ -9,6 +10,10 @@ export function pushTask(title, description, date, priorityColor) {
   obj.isDone = false;
 
   getProjectTaskArray(document.getElementById('tab-name').textContent).push(obj);
+
+  if(isToday(parseISO(date))){
+    getProjectTaskArray('Today').push(obj);
+  }
 }
 
 export function validateAddTask(title, description) {

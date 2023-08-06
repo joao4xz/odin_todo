@@ -152,25 +152,28 @@ export function createMainPage(headerTextContent, headerLineColor) {
   addTaskButton.classList.add('flex', 'items-center', 'gap-2', 'hover:bg-slate-300', 'rounded-lg', 'px-3', 'py-1');
   addTaskButton.id = 'add-task';
 
-  const addTaskButtonSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  addTaskButtonSVG.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-  addTaskButtonSVG.classList.add('w-4', 'fill-zinc-600');
-  addTaskButtonSVG.setAttribute('viewBox', '0 0 512 512');
+  if(headerTextContent !== 'Today') {
+    const addTaskButtonSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    addTaskButtonSVG.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    addTaskButtonSVG.classList.add('w-4', 'fill-zinc-600');
+    addTaskButtonSVG.setAttribute('viewBox', '0 0 512 512');
+  
+    const addTaskButtonSVGtitle = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+    addTaskButtonSVGtitle.textContent = 'Add task';
+  
+    const addTaskButtonSVGpath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    addTaskButtonSVGpath.setAttribute('d', 'M492 236H276V20c0-11.046-8.954-20-20-20s-20 8.954-20 20v216H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h216v216c0 11.046 8.954 20 20 20s20-8.954 20-20V276h216c11.046 0 20-8.954 20-20s-8.954-20-20-20z');
+  
+    addTaskButtonSVG.appendChild(addTaskButtonSVGtitle);
+    addTaskButtonSVG.appendChild(addTaskButtonSVGpath);
+  
+    const addTaskButtonText = document.createElement('p');
+    addTaskButtonText.textContent = 'Add task';
+  
+    addTaskButton.appendChild(addTaskButtonSVG);
+    addTaskButton.appendChild(addTaskButtonText);
+  }
 
-  const addTaskButtonSVGtitle = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-  addTaskButtonSVGtitle.textContent = 'Add task';
-
-  const addTaskButtonSVGpath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  addTaskButtonSVGpath.setAttribute('d', 'M492 236H276V20c0-11.046-8.954-20-20-20s-20 8.954-20 20v216H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h216v216c0 11.046 8.954 20 20 20s20-8.954 20-20V276h216c11.046 0 20-8.954 20-20s-8.954-20-20-20z');
-
-  addTaskButtonSVG.appendChild(addTaskButtonSVGtitle);
-  addTaskButtonSVG.appendChild(addTaskButtonSVGpath);
-
-  const addTaskButtonText = document.createElement('p');
-  addTaskButtonText.textContent = 'Add task';
-
-  addTaskButton.appendChild(addTaskButtonSVG);
-  addTaskButton.appendChild(addTaskButtonText);
 
   mainContainer.appendChild(mainHeader);
   mainContainer.appendChild(tasks);
@@ -436,21 +439,23 @@ export function createTask(title, description, date, priority, isDone) {
   const rightDiv = document.createElement('div');
   rightDiv.classList.add('right');
 
-  const taskButtonsDiv = document.createElement('div');
-  taskButtonsDiv.classList.add('task-buttons', 'flex', 'gap-1');
+  if(document.getElementById('tab-name').textContent !== 'Today'){
+    const taskButtonsDiv = document.createElement('div');
+    taskButtonsDiv.classList.add('task-buttons', 'flex', 'gap-1');
 
-  const editButton = document.createElement('button');
-  editButton.classList.add('hover:bg-slate-300', 'rounded');
-  editButton.innerHTML = '<svg class="w-6 hover:fill-slate-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Edit</title><path d="M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z" /></svg>';
+    const editButton = document.createElement('button');
+    editButton.classList.add('hover:bg-slate-300', 'rounded');
+    editButton.innerHTML = '<svg class="w-6 hover:fill-slate-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Edit</title><path d="M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z" /></svg>';
 
-  const deleteButton = document.createElement('button');
-  deleteButton.classList.add('hover:bg-slate-300', 'rounded');
-  deleteButton.innerHTML = '<svg class="w-6 hover:fill-slate-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Delete</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z"></path></svg>';
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('hover:bg-slate-300', 'rounded');
+    deleteButton.innerHTML = '<svg class="w-6 hover:fill-slate-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Delete</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z"></path></svg>';
 
-  taskButtonsDiv.appendChild(editButton);
-  taskButtonsDiv.appendChild(deleteButton);
+    taskButtonsDiv.appendChild(editButton);
+    taskButtonsDiv.appendChild(deleteButton);
 
-  rightDiv.appendChild(taskButtonsDiv);
+    rightDiv.appendChild(taskButtonsDiv);
+  }
 
   taskDiv.appendChild(leftDiv);
   taskDiv.appendChild(rightDiv);
@@ -460,14 +465,6 @@ export function createTask(title, description, date, priority, isDone) {
 
 function renderTasks() {
   const tasks = getProjectTaskArray(document.getElementById('tab-name').textContent);
-
-  if(document.getElementById('tab-name').textContent === 'Today') {
-    const todayArray = getTodayTaskArray();
-
-    for (let i = 0; i < todayArray.length; i++) {
-      createTask(todayArray[i].title, todayArray[i].description, todayArray[i].date, todayArray[i].priorityColor, todayArray[i].isDone);
-    }
-  }
 
   for (let i = 0; i < tasks.length; i++) {
     createTask(tasks[i].title, tasks[i].description, tasks[i].date, tasks[i].priorityColor, tasks[i].isDone);
