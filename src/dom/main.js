@@ -56,21 +56,25 @@ export function createMainPage(headerTextContent, headerLineColor) {
   defaultOption.setAttribute('type', 'button');
   defaultOption.setAttribute('class', 'bg-zinc-300 px-3 w-full rounded-t-md');
   defaultOption.textContent = 'Default';
+  defaultOption.id = 'default';
 
   const priorityOption = document.createElement('button');
   priorityOption.setAttribute('type', 'button');
   priorityOption.setAttribute('class', 'hover:bg-slate-100 px-3 w-full');
   priorityOption.textContent = 'Priority';
+  priorityOption.id = 'priority';
 
   const dateOption = document.createElement('button');
   dateOption.setAttribute('type', 'button');
   dateOption.setAttribute('class', 'hover:bg-slate-100 px-3 w-full');
   dateOption.textContent = 'Date';
+  dateOption.id = 'date';
 
   const statusOption = document.createElement('button');
   statusOption.setAttribute('type', 'button');
   statusOption.setAttribute('class', 'hover:bg-slate-100 px-3 w-full rounded-b-md');
   statusOption.textContent = 'Status';
+  statusOption.id = 'status';
 
   sortDropdown.appendChild(defaultOption);
   sortDropdown.appendChild(priorityOption);
@@ -179,6 +183,11 @@ export function createMainPage(headerTextContent, headerLineColor) {
 export function cleanMainPage() {
   const mainContainer = document.getElementById('main-container');
   mainContainer.textContent = '';
+}
+
+export function cleanTasks() {
+  const tasks = document.getElementById('tasks');
+  tasks.textContent = '';
 }
 
 export function createDeleteWarning(title) {
