@@ -5,7 +5,7 @@ export function createOverlay() {
   const overlay = document.createElement('div');
 
   overlay.id = 'overlay';
-  overlay.classList.add('absolute', 'top-0', 'left-0', 'w-full', 'h-full', 'bg-black', 'bg-opacity-50', 'grid', 'place-items-center');
+  overlay.classList.add('absolute', 'top-0', 'left-0', 'w-full', 'h-full', 'bg-black', 'bg-opacity-50', 'grid', 'place-items-center', 'z-20');
 
   document.body.appendChild(overlay);
   handleOverlay();
