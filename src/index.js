@@ -13,22 +13,18 @@ handleMain();
 
 addProject('The Odin Project', 'red');
 
-createTask('Submit project report', 'Write and submit the final project report', '2023-08-30', 'yellow');
-createTask('Finish todo app', 'Finish todo app project and post it on discord', '2023-08-29', 'red');
-createTask('Revise code', 'Review and refactor the code for better optimization', '2023-09-01', 'gray');
-createTask('Prepare presentation', 'Create slides and rehearse the presentation', '2023-08-31', 'blue');
-createTask('Submit assignment', 'Complete the assignment and submit it online', '2023-08-25', 'red');
-createTask('Prepare meeting agenda', 'Create an agenda for the team meeting and distribute it to the members', '2023-08-07', 'blue');
-createTask('Study for exam', 'Review lecture notes and practice problems for the upcoming exam', '2023-08-27', 'yellow');
-createTask('Clean the house', 'Tidy up the house and do some cleaning', '2023-08-26', 'gray');
+function addTask(title, description, date, priorityColor) {
+  createTask(title, description, date, priorityColor);
+  pushTask(title, description, date, priorityColor);
+}
 
-pushTask('Submit project report', 'Write and submit the final project report', '2023-08-30', 'yellow');
-pushTask('Finish todo app', 'Finish todo app project and post it on discord', '2023-08-29', 'red');
-pushTask('Revise code', 'Review and refactor the code for better optimization', '2023-09-01', 'gray');
-pushTask('Prepare presentation', 'Create slides and rehearse the presentation', '2023-08-31', 'blue');
-pushTask('Submit assignment', 'Complete the assignment and submit it online', '2023-08-25', 'red');
-pushTask('Prepare meeting agenda', 'Create an agenda for the team meeting and distribute it to the members', '2023-08-07', 'blue');
-pushTask('Study for exam', 'Review lecture notes and practice problems for the upcoming exam', '2023-08-27', 'yellow');
-pushTask('Clean the house', 'Tidy up the house and do some cleaning', '2023-08-26', 'gray');
+addTask('Submit project report', 'Write and submit the final project report', '2023-08-08', 'yellow');
+addTask('Finish todo app', 'Finish todo app project and post it on discord', '2023-08-07', 'red');
+addTask('Revise code', 'Review and refactor the code for better optimization', '2023-08-06', 'gray');
+addTask('Prepare presentation', 'Create slides and rehearse the presentation', '2023-08-10', 'blue');
+addTask('Submit assignment', 'Complete the assignment and submit it online', '2023-08-14', 'red');
+addTask('Prepare meeting agenda', 'Create an agenda for the team meeting and distribute it to the members', '2023-08-07', 'blue');
+addTask('Study for exam', 'Review lecture notes and practice problems for the upcoming exam', '2023-08-01', 'yellow');
+addTask('Clean the house', 'Tidy up the house and do some cleaning', '2023-08-26', 'gray');
 
 printProjects();

@@ -1,9 +1,7 @@
-import { handleMainPageButtons } from "../handlers/main";
+import { handleMainPageButtons, handleWarningButtons } from "../handlers/main";
 import { createOverlay, removeOverlay } from "./nav";
-import { handleWarningButtons } from "../handlers/main";
-import { getProjectTaskArray, getTodayTaskArray, getUpcomingTaskArray } from "../data/projects";
+import { getProjectTaskArray, getTodayTaskArray, getUpcomingTaskArray, printProjects } from "../data/projects";
 import { parse, format, isToday, parseISO, isFuture } from 'date-fns';
-import { printProjects } from "../data/projects";
 
 export function createMainPage(headerTextContent, headerLineColor) {
   cleanMainPage();

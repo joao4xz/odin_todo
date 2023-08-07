@@ -1,10 +1,9 @@
 import { getProject, printProjects, deleteProject, getProjectTaskArray } from "../data/projects";
-import { createAddTaskHUD, createMainPage, createTask, createEditTaskHUD, saveTask, createDeleteTaskHUD, cleanTasks } from "../dom/main";
-import { deleteCurrentProject } from "../dom/main";
+import { createAddTaskHUD, createMainPage, createTask, createEditTaskHUD, saveTask, createDeleteTaskHUD, cleanTasks, deleteCurrentProject } from "../dom/main";
 import { createEditProjectHUD, removeOverlay } from "../dom/nav";
 import { handleEditProjectHUD } from "../handlers/nav";
 import { deleteTask, pushTask, validateAddTask, validateEditTask } from "../data/tasks";
-import { compareAsc, compareDesc } from "date-fns";
+import { compareAsc } from "date-fns";
 
 function handleMainSortButton() {
   const sortButton = document.getElementById('sort');

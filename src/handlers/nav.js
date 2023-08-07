@@ -1,8 +1,4 @@
-import { createAddProjectHUD } from "../dom/nav";
-import { createEditProjectHUD } from "../dom/nav";
-import { addProject } from "../dom/nav";
-import { saveProject } from "../dom/nav";
-import { removeOverlay } from "../dom/nav";
+import { createAddProjectHUD, createEditProjectHUD, addProject, removeOverlay } from "../dom/nav";
 import { createMainPage, renderTodayTasks, renderUpcomingTasks } from "../dom/main";
 import { printProjects, validateAddProject, validateEditProject } from "../data/projects";
 
