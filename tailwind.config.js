@@ -9,9 +9,6 @@ module.exports = {
       gridTemplateRows: {
         'container': 'auto 1fr',
       },
-      gridTemplateColumns: {
-        'container': 'auto, 1fr',
-      },
       fontFamily: {
         'Roboto': ['Roboto']
       },

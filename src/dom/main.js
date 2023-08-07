@@ -11,7 +11,7 @@ export function createMainPage(headerTextContent, headerLineColor) {
   const mainContainer = document.getElementById('main-container');
 
   const mainHeader = document.createElement('div');
-  mainHeader.classList.add('flex', 'justify-between', 'gap-10', 'border-b', `border-[${headerLineColor}]`, 'pb-3');
+  mainHeader.classList.add('flex', 'justify-between', 'border-b', `border-[${headerLineColor}]`, 'pb-3', 'flex-col', 'gap-2', 'md:flex-gap-10', 'sm:flex-row');
 
   const headerText = document.createElement('div');
   headerText.classList.add('text-4xl');

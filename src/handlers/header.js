@@ -5,7 +5,8 @@ function handleMenuButton() {
   const nav = document.querySelector('nav');
 
   menuButton.addEventListener('click', () => {
-    nav.classList.toggle('hidden');
+    nav.classList.toggle('slide-in');
+    nav.classList.toggle('slide-out');
   });
 }
 
