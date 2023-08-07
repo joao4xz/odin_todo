@@ -3,8 +3,8 @@ import { createEditProjectHUD } from "../dom/nav";
 import { addProject } from "../dom/nav";
 import { saveProject } from "../dom/nav";
 import { removeOverlay } from "../dom/nav";
-import { createMainPage } from "../dom/main";
-import { validateAddProject, validateEditProject } from "../data/projects";
+import { createMainPage, renderTodayTasks, renderUpcomingTasks } from "../dom/main";
+import { printProjects, validateAddProject, validateEditProject } from "../data/projects";
 
 function handleInboxButton() {
   const inboxButton = document.getElementById('inbox-button');
@@ -24,6 +24,8 @@ function handleTodayButton() {
     const tabName = document.getElementById('tab-name');
     if(todayButton.querySelector('p').textContent !== tabName.textContent) {
       createMainPage('Today', 'green');
+      renderTodayTasks();
+      printProjects();
     }
   });
 }
@@ -35,6 +37,8 @@ function handleUpcomingButton() {
     const tabName = document.getElementById('tab-name');
     if(upcomingButton.querySelector('p').textContent !== tabName.textContent) {
       createMainPage('Upcoming', 'purple');
+      renderUpcomingTasks();
+      printProjects();
     }
   });
 }

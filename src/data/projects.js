@@ -1,4 +1,4 @@
-import { isToday, parseISO } from "date-fns";
+import { isToday, isFuture, parseISO } from "date-fns";
 
 export const projects = [
   {
@@ -67,12 +67,24 @@ export function getTodayTaskArray() {
   const todayArray = [];
   for(let i = 0; i < projects.length; i++){
     for(let j = 0; j < projects[i].tasks.length; j++){
-      if(isToday(parseISO(projects[i].tasks[j].date))){
+      if(isToday(parseISO(projects[i].tasks[j].date)) && projects[i].title !== 'today' && projects[i].title !== 'upcoming'){
         todayArray.push(projects[i].tasks[j]);
       }
     }
   }
   return todayArray;
+}
+
+export function getUpcomingTaskArray() {
+  const upcomingArray = [];
+  for(let i = 0; i < projects.length; i++){
+    for(let j = 0; j < projects[i].tasks.length; j++){
+      if(isFuture(parseISO(projects[i].tasks[j].date)) && projects[i].title !== 'upcoming'){
+        upcomingArray.push(projects[i].tasks[j]);
+      }
+    }
+  }
+  return upcomingArray;
 }
 
 export function deleteProject(title) {

@@ -1,8 +1,8 @@
 import { handleMainPageButtons } from "../handlers/main";
 import { createOverlay, removeOverlay } from "./nav";
 import { handleWarningButtons } from "../handlers/main";
-import { getProjectTaskArray, getTodayTaskArray } from "../data/projects";
-import { parse, format, isToday } from 'date-fns';
+import { getProjectTaskArray, getTodayTaskArray, getUpcomingTaskArray } from "../data/projects";
+import { parse, format, isToday, parseISO, isFuture } from 'date-fns';
 import { printProjects } from "../data/projects";
 
 export function createMainPage(headerTextContent, headerLineColor) {
@@ -152,7 +152,8 @@ export function createMainPage(headerTextContent, headerLineColor) {
   addTaskButton.classList.add('flex', 'items-center', 'gap-2', 'hover:bg-slate-300', 'rounded-lg', 'px-3', 'py-1');
   addTaskButton.id = 'add-task';
 
-  if(headerTextContent !== 'Today') {
+  if(headerTextContent !== 'Today' &&
+     headerTextContent !== 'Upcoming') {
     const addTaskButtonSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     addTaskButtonSVG.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
     addTaskButtonSVG.classList.add('w-4', 'fill-zinc-600');
@@ -180,7 +181,10 @@ export function createMainPage(headerTextContent, headerLineColor) {
   mainContainer.appendChild(addTaskButton);
 
   handleMainPageButtons(headerTextContent);
-  renderTasks();
+
+  if(headerTextContent !== 'Today' && headerTextContent !== 'Upcoming') {
+    renderTasks();
+  }
 }
 
 export function cleanMainPage() {
@@ -439,7 +443,8 @@ export function createTask(title, description, date, priority, isDone) {
   const rightDiv = document.createElement('div');
   rightDiv.classList.add('right');
 
-  if(document.getElementById('tab-name').textContent !== 'Today'){
+  if(document.getElementById('tab-name').textContent !== 'Today' &&
+     document.getElementById('tab-name').textContent !== 'Upcoming'){
     const taskButtonsDiv = document.createElement('div');
     taskButtonsDiv.classList.add('task-buttons', 'flex', 'gap-1');
 
@@ -468,6 +473,34 @@ function renderTasks() {
 
   for (let i = 0; i < tasks.length; i++) {
     createTask(tasks[i].title, tasks[i].description, tasks[i].date, tasks[i].priorityColor, tasks[i].isDone);
+  }
+}
+
+export function renderTodayTasks() {
+  const tasks = getTodayTaskArray();
+  const todayTasks = getProjectTaskArray('Today');
+
+  let j = 0;
+  for (let i = 0; i < tasks.length; i++) {
+    if(isToday(parseISO(tasks[i].date))){
+      todayTasks[j] = tasks[i];
+      createTask(todayTasks[j].title, todayTasks[j].description, todayTasks[j].date, todayTasks[j].priorityColor, todayTasks[j].isDone);
+      j++;
+    }
+  }
+}
+
+export function renderUpcomingTasks() {
+  const tasks = getUpcomingTaskArray();
+  const upcomingTasks = getProjectTaskArray('Upcoming');
+
+  let j = 0;
+  for (let i = 0; i < tasks.length; i++) {
+    if(isFuture(parseISO(tasks[i].date))){
+      upcomingTasks[j] = tasks[i];
+      createTask(upcomingTasks[j].title, upcomingTasks[j].description, upcomingTasks[j].date, upcomingTasks[j].priorityColor, upcomingTasks[j].isDone);
+      j++;
+    }
   }
 }
 
